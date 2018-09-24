@@ -4,8 +4,6 @@
 
 #include "dacincubator.hpp"
 
-
-
 void dacincubator::init() {
     require_auth(_self);    
 
@@ -32,6 +30,18 @@ void dacincubator::receipt(const rec& recept) {
 }
     
 void dacincubator::onTransfer(account_name from, account_name to, asset eos, std::string memo) {        
+
+    if (from == _self) {
+        pendingtx.emplace(_self, [&](auto &t) {
+            t.id = pendingtx.available_primary_key();     
+            t.from = from;
+            t.to = to;
+            t.quantity = eos;
+            t.memo = memo;
+        });
+        return;
+    }
+
     if (to != _self) {
         return;
     }
@@ -70,20 +80,5 @@ void dacincubator::transfer(account_name from, account_name to, asset quantity, 
         sell(from, quantity);
     } else {
         token::transfer(from, to, quantity, memo);
-    }
-}
-
-extern "C"
-{
-    void apply(uint64_t receiver, uint64_t code, uint64_t action)
-    {
-        auto self = receiver;
-        dacincubator thiscontract(self);
-        if ((code == N(eosio.token)) && (action == N(transfer))) {
-            execute_action(&thiscontract, &dacincubator::onTransfer);
-            return;
-        }
-        if (code != receiver) return;                              
-        switch (action) {EOSIO_API(dacincubator, (transfer)(init)(test))}                   
     }
 }

@@ -5,6 +5,8 @@
  *  I am the linear version of kyubey protocol.
  */
 
+// dacincubator
+
 #pragma once
 
 #include "eosio.token.hpp"
@@ -57,6 +59,7 @@ class kyubey : public token {
         // @abi table market i64
         struct market {
             uint64_t id = 0;
+            uint64_t defer_id = 0;            
             asset supply;
             asset balance;
             uint64_t progress;
@@ -92,7 +95,7 @@ class kyubey : public token {
                 return asset(delta_balance, balance.symbol);
             }
 
-            EOSLIB_SERIALIZE(market, (supply)(balance))
+            EOSLIB_SERIALIZE(market, (supply)(balance)(progress))
         };
 
         typedef eosio::multi_index<N(market), market> market_index;

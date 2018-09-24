@@ -1,10 +1,9 @@
-﻿#include <eosiolib/currency.hpp>
+#include <eosiolib/currency.hpp>
 #include <eosiolib/asset.hpp>
 #include <math.h>
 #include <string>
-
-#include "kyubey.hpp"
-#include "utils.hpp"
+#include <eosiolib/contract.hpp>
+#include <eosiolib/transaction.hpp>
 
 #define EOS S(4, EOS)
 #define TOKEN_CONTRACT N(eosio.token)
@@ -14,13 +13,13 @@ using namespace std;
 
 typedef double real_type;
 
-class dacincubator : public kyubey
+class eospinduoduo : public contract
 {
 public:
-    dacincubator(account_name self) : 
-        kyubey(self),
+    eospinduoduo(account_name self) :
+        contract(self),
         global(_self, _self), 
-        pendingtx(_self, _self) {
+        orders(_self, _self) {
     }
 
     // @abi action
@@ -41,36 +40,44 @@ public:
                     asset          quantity,
                     string         memo);  
 
+    // @abi action    
+    void claim();
+
+    // @abi action    
+    void distribute();
+
+
     // @abi table global i64
     struct global {
         uint64_t id = 0;        
         uint64_t defer_id = 0;
-        
+        asset reserve;        
+        asset supply;
+        time claim_time;
         uint64_t primary_key() const { return id; }
-        EOSLIB_SERIALIZE(global, (id)(defer_id)) 
+        EOSLIB_SERIALIZE(global, (id)(defer_id)(reserve)) 
     };
     typedef eosio::multi_index<N(global), global> global_index;
     global_index global;                 
 
     // @abi table global i64    
-    struct pendingtx {
+    struct order {
         uint64_t id = 0;  
-        account_name  from;
-        account_name  to;
+        account_name  account;
         asset         quantity;
-        string        memo;
         uint64_t primary_key() const { return id; }
         void release() {
         }
-        EOSLIB_SERIALIZE(pendingtx, (id)(from)(to)(quantity)(memo)) 
+        EOSLIB_SERIALIZE(order, (id)(account)(quantity)) 
     };
-    typedef eosio::multi_index<N(pendingtx), pendingtx> pendingtx_index;
-    pendingtx_index pendingtx;     
+    typedef eosio::multi_index<N(order), order> order_index;
+    order_index orders;     
             
     // @abi table
     struct rec {
         account_name account;
         asset quantity;
+        time time_stamp;
     };
 
     // @abi action    
@@ -97,12 +104,12 @@ extern "C"
     void apply(uint64_t receiver, uint64_t code, uint64_t action)
     {
         auto self = receiver;
-        dacincubator thiscontract(self);
+        eospinduoduo thiscontract(self);
         if ((code == N(eosio.token)) && (action == N(transfer))) {
-            execute_action(&thiscontract, &dacincubator::onTransfer);
+            execute_action(&thiscontract, &eospinduoduo::onTransfer);
             return;
         }
         if (code != receiver) return;                              
-        switch (action) {EOSIO_API(dacincubator, (transfer)(init)(test))}                   
+        switch (action) {EOSIO_API(eospinduoduo, (transfer)(init)(test))}
     }
 }
