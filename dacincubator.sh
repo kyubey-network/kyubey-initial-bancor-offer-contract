@@ -9,7 +9,9 @@ cleos wallet unlock --password PW5JaGpLtoM1vtD1WxiAC4RDsr82FRUczmKgocw1KJZqVahB4
 # Set Contract
 cleos -u https://api-kylin.eosasia.one set contract dacincubator dacincubator -p dacincubator@active
 
-#cleos -u http://api-direct.eosasia.one push action dacincubator retrieve '[ "wqeosram1111", 50, "200000.0000 TPT @ tokendappub" ]' -p dacincubator@active
+cleos -u https://api-kylin.eosasia.one push action dacincubator init '[""]' -p dacincubator@active
+
+
 # cleos -u http://api-direct.eosasia.one push action dacincubator test '[ "" ]' -p dacincubator@active
 
 #eosowangfeng TPT
