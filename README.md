@@ -1,7 +1,19 @@
 ## Introduction
 
+## KBY Token 发行规则
+使用线性函数发行。类似 P3D 的发行曲线。
 
-## Group Buy 团购合约
+- 价格增加速率：10^-10 / KBY
+- 初始价格：0.002 EOS/KBY
+- 初始 dummy 发行量：20M
+- 初始 dummy 储备金：20k
+
+- 一期募集金额 80k  EOS，时间：10.29th
+- 二期募集金额 200k EOS，时间：2019 年 Q1，具体时间待定。
+
+- https://kyubey.network/Home/Analysis/kyubey
+
+## eospinduoduo 团购合约
 为了防止机器人和老鼠仓等行为，初始时合约的购买功能，仅开放给一个白名单合约。
 用户可以在这个合约中进行登记，并在一定时间后，所有人按照相等的价格购买。
 
