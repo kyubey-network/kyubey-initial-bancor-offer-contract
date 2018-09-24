@@ -26,7 +26,7 @@ using eosio::symbol_type;
 using eosio::action;
 using eosio::permission_level;
 
-const uint64_t K = 100000000;
+const uint64_t K = 10000000000;
 
 class kyubey : public token {
     public:
@@ -36,10 +36,10 @@ class kyubey : public token {
         
         void buy(account_name account, asset in) {    
             asset out;
-            /*_market.modify(_market.begin(), 0, [&](auto &m) {
+            _market.modify(_market.begin(), 0, [&](auto &m) {
                 out = m.buy(in.amount);
             });                                            
-            issue(account, out, "");*/
+            issue(account, out, "");
         }
 
         void sell(account_name account, asset in) {
@@ -58,16 +58,15 @@ class kyubey : public token {
 
         // @abi table market i64
         struct market {
-            uint64_t id = 0;
-            uint64_t defer_id = 0;            
+            uint64_t id = 0;        
             asset supply;
             asset balance;
             uint64_t progress;
                          
             uint64_t primary_key() const { return id; }
             
-            void fee(uint64_t& x) {
-                x *= (10000 - progress) / 10000;
+            uint64_t fee(uint64_t x) {
+                return x * progress / 10000;
             }
 
             void update_progress(uint64_t new_progress) {
@@ -76,7 +75,7 @@ class kyubey : public token {
             }
 
             asset buy(uint64_t in) {
-                fee(in);
+                in -= fee(in);
                 balance.amount += in;
                 uint64_t new_supply = sqrt(balance.amount * 2 * 10000 * K);
                 uint64_t delta_supply = new_supply - supply.amount;
@@ -91,11 +90,11 @@ class kyubey : public token {
                 uint64_t new_balance = (supply.amount * supply.amount) / 2 / 10000 / K;
                 uint64_t delta_balance = balance.amount - new_balance;
                 balance.amount = new_balance;
-                fee(delta_balance);
+                delta_balance -= fee(delta_balance);
                 return asset(delta_balance, balance.symbol);
             }
 
-            EOSLIB_SERIALIZE(market, (supply)(balance)(progress))
+            EOSLIB_SERIALIZE(market, (id)(supply)(balance)(progress))
         };
 
         typedef eosio::multi_index<N(market), market> market_index;

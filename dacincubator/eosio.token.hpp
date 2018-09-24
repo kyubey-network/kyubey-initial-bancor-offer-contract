@@ -33,6 +33,7 @@ namespace eosio {
             
             inline asset get_balance( account_name owner, symbol_name sym )const;
 
+            // @abi table accounts i64    
             struct account {
                   asset    balance;
 
@@ -46,6 +47,7 @@ namespace eosio {
 
                   uint64_t primary_key()const { return supply.symbol.name(); }
             };
+
 
             typedef eosio::multi_index<N(accounts), account> accounts;
             typedef eosio::multi_index<N(stat), currency_stats> stats;
