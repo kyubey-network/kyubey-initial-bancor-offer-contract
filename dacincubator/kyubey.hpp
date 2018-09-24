@@ -36,10 +36,10 @@ class kyubey : public token {
         
         void buy(account_name account, asset in) {    
             asset out;
-            _market.modify(_market.begin(), 0, [&](auto &m) {
+            /*_market.modify(_market.begin(), 0, [&](auto &m) {
                 out = m.buy(in.amount);
             });                                            
-            issue(account, out, "");
+            issue(account, out, "");*/
         }
 
         void sell(account_name account, asset in) {
