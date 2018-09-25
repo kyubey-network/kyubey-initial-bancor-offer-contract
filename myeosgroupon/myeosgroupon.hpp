@@ -47,7 +47,6 @@ public:
     // @abi action    
     void distribute();
 
-
     // @abi table global i64
     struct global {
         uint64_t id = 0;        
@@ -63,7 +62,7 @@ public:
 
     // @abi table global i64    
     struct order {
-        uint64_t id = 0;  
+        uint64_t id = 0 ;  
         account_name  account;
         asset         quantity;
         uint64_t primary_key() const { return id; }
@@ -97,7 +96,10 @@ public:
         transaction trx;
         trx.actions.emplace_back(std::forward<Args>(args)...);
         trx.send(get_next_defer_id(), _self, false);
-    }    
+    }
+
+    private:
+        void joingroup( const account_name account, asset eos );    
 };
 
 extern "C"
