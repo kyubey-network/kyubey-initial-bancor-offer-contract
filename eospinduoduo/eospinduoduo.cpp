@@ -30,7 +30,7 @@ void eospinduoduo::claim() {
     require_auth(_self);
 
     auto g = global.begin();
-    eosio_assert(now() >= g->claim_time, "The ITE Token sell will start at 2018-08-23 T 20:00:00");
+    eosio_assert(now() >= g->claim_time, "The KBY group buy will start at 2018-08-23 T 20:00:00");
 
     action(
         permission_level{_self, N(active)},

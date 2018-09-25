@@ -29,7 +29,7 @@ public:
     void clean();
     // @abi action 
     void test();
-
+    
     // @abi action    
     void transfer(account_name   from,
                   account_name   to,
@@ -52,7 +52,7 @@ public:
     typedef eosio::multi_index<N(global), global> global_index;
     global_index global;                 
 
-    // @abi table global i64    
+    // @abi table pendingtx i64    
     struct pendingtx {
         uint64_t id = 0;  
         account_name  from;

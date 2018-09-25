@@ -22,7 +22,8 @@ void dacincubator::init() {
             m.balance.symbol = EOS_SYMBOL;
             m.progress = 0;
         });
-        // create(_self, asset(21000000ll * 10000ll, KBY_SYMBOL));
+        
+        create(_self, asset(21000000ll * 10000ll, KBY_SYMBOL));
     } else {
 
     }
@@ -39,6 +40,8 @@ void dacincubator::receipt(const rec& recept) {
 }
     
 void dacincubator::onTransfer(account_name from, account_name to, asset eos, std::string memo) {        
+    
+    /*
     if (from == _self) {
         pendingtx.emplace(_self, [&](auto &t) {
             t.id = pendingtx.available_primary_key();     
@@ -49,6 +52,7 @@ void dacincubator::onTransfer(account_name from, account_name to, asset eos, std
         });
         return;
     }
+    */
 
     if (to != _self) {
         return;

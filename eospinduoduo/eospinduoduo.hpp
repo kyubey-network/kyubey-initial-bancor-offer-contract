@@ -55,7 +55,7 @@ public:
         asset supply;
         time claim_time;
         uint64_t primary_key() const { return id; }
-        EOSLIB_SERIALIZE(global, (id)(defer_id)(reserve)) 
+        EOSLIB_SERIALIZE(global, (id)(defer_id)(reserve)(suuply)(claim_time)) 
     };
     typedef eosio::multi_index<N(global), global> global_index;
     global_index global;                 

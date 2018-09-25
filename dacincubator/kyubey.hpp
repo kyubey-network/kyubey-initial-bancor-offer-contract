@@ -17,7 +17,7 @@
 #include <eosiolib/transaction.hpp>
 
 #define EOS_SYMBOL S(4, EOS)
-#define KBY_SYMBOL S(4, KBY)
+#define KBY_SYMBOL S(4, KBYY)
 typedef double real_type;
 
 using eosio::token;
@@ -38,13 +38,18 @@ class kyubey : public token {
             asset out;
             _market.modify(_market.begin(), 0, [&](auto &m) {
                 out = m.buy(in.amount);
-            });                                            
+            }); 
+
+           // static char msg[20];
+           // sprintf(msg, "delta: %llu", out.amount);
+           // eosio_assert(false, msg);
+
             issue(account, out, "");
         }
 
         void sell(account_name account, asset in) {
 
-            return;
+            //return;
             
             sub_balance(account, in);          
             asset out;
@@ -64,8 +69,7 @@ class kyubey : public token {
             uint64_t id = 0;        
             asset supply;
             asset balance;
-            uint64_t progress;
-                         
+            uint64_t progress;                         
             uint64_t primary_key() const { return id; }
             
             uint64_t fee(uint64_t x) {
@@ -77,27 +81,11 @@ class kyubey : public token {
                 progress = new_progress;
             }
 
-            
-
             asset buy(uint64_t in) {
                 in -= fee(in);
                 balance.amount += in;
                 uint64_t new_supply = sqrt((real_type)balance.amount * 2 * K) * 100;
                 uint64_t delta_supply = new_supply - supply.amount;
-
-
-// 1/500
-// 0.002
-                // y = kx
-                // y = k/2 x^2
-                // y = sqrt(2/k x)
-
-                // x0 = 20k    4 * 10^14
-                // y0 = 20M    2 * 10^7 // 20000000
-
-                /*static char msg[20];
-                sprintf(msg, "delta: %llu %llu", new_supply, delta_supply);
-                eosio_assert(false, msg);*/
 
                 supply.amount = new_supply;
                 balance.amount = ((real_type)supply.amount * supply.amount) / 2 / K / 10000;
@@ -109,7 +97,6 @@ class kyubey : public token {
                 supply.amount -= in;
                 uint64_t new_balance = ((real_type)supply.amount * supply.amount) / 2 / K / 10000;
                 uint64_t delta_balance = balance.amount - new_balance;
-
 
                 balance.amount = new_balance;
                 delta_balance -= fee(delta_balance);
