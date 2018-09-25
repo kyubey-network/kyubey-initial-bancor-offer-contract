@@ -43,6 +43,7 @@ class kyubey : public token {
         }
 
         void sell(account_name account, asset in) {
+            
             sub_balance(account, in);          
             asset out;
             _market.modify(_market.begin(), 0, [&](auto &m) {
@@ -74,21 +75,40 @@ class kyubey : public token {
                 progress = new_progress;
             }
 
+            
+
             asset buy(uint64_t in) {
                 in -= fee(in);
                 balance.amount += in;
-                uint64_t new_supply = sqrt(balance.amount * 2 * 10000 * K);
+                uint64_t new_supply = sqrt((real_type)balance.amount * 2 * K) * 100;
                 uint64_t delta_supply = new_supply - supply.amount;
+
+
+// 1/500
+// 0.002
+                // y = kx
+                // y = k/2 x^2
+                // y = sqrt(2/k x)
+
+                // x0 = 20k    4 * 10^14
+                // y0 = 20M    2 * 10^7 // 20000000
+
+                /*static char msg[20];
+                sprintf(msg, "delta: %llu %llu", new_supply, delta_supply);
+                eosio_assert(false, msg);*/
+
                 supply.amount = new_supply;
-                balance.amount = (supply.amount * supply.amount) / 2 / 10000 / K;
+                balance.amount = ((real_type)supply.amount * supply.amount) / 2 / K / 10000;
                 return asset(delta_supply, supply.symbol);
             } 
 
             asset sell(uint64_t in) {
                 //uint64_t eos_return = (((supply.amount << 1) - in) * in / 2 / 10000 / K);
                 supply.amount -= in;
-                uint64_t new_balance = (supply.amount * supply.amount) / 2 / 10000 / K;
+                uint64_t new_balance = ((real_type)supply.amount * supply.amount) / 2 / K / 10000;
                 uint64_t delta_balance = balance.amount - new_balance;
+
+
                 balance.amount = new_balance;
                 delta_balance -= fee(delta_balance);
                 return asset(delta_balance, balance.symbol);

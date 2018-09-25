@@ -10,7 +10,7 @@ cleos wallet unlock --password PW5JaGpLtoM1vtD1WxiAC4RDsr82FRUczmKgocw1KJZqVahB4
 cleos -u https://api-kylin.eosasia.one set contract dacincubator dacincubator -p dacincubator@active
 
 # cleos -u https://api-kylin.eosasia.one push action dacincubator test '[""]' -p dacincubator@active
-cleos -u https://api-kylin.eosasia.one push action dacincubator init '[""]' -p dacincubator@active
+# cleos -u https://api-kylin.eosasia.one push action dacincubator init '[""]' -p dacincubator@active
 cleos -u https://api-kylin.eosasia.one push action eosio.token transfer '[ "minakokojima", "dacincubator", "1.0000 EOS", "buy"]' -p minakokojima@active
 
 
