@@ -43,6 +43,8 @@ class kyubey : public token {
         }
 
         void sell(account_name account, asset in) {
+
+            return;
             
             sub_balance(account, in);          
             asset out;

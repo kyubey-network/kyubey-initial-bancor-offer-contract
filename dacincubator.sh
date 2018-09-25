@@ -11,10 +11,15 @@ cleos -u https://api-kylin.eosasia.one set contract dacincubator dacincubator -p
 
 # cleos -u https://api-kylin.eosasia.one push action dacincubator test '[""]' -p dacincubator@active
 # cleos -u https://api-kylin.eosasia.one push action dacincubator init '[""]' -p dacincubator@active
-cleos -u https://api-kylin.eosasia.one push action eosio.token transfer '[ "minakokojima", "dacincubator", "1.0000 EOS", "buy"]' -p minakokojima@active
+# cleos -u https://api-kylin.eosasia.one push action eosio.token transfer '[ "minakokojima", "dacincubator", "1.0000 EOS", "buy"]' -p minakokojima@active
 
+cleos -u https://api-kylin.eosasia.one push action dacincubator transfer '[ "minakokojima", "dacincubator", "499.9937 KBY", "sell"]' -p minakokojima@active
 
+cleos -u https://api-kylin.eosasia.one push action dacincubator transfer '[ "dacincubator", "minakokojima", "499.9937 KBY", "refund"]' -p dacincubator@active
 
+# cleos -u https://api-kylin.eosasia.one get table dacincubator dacincubator accounts
+
+# cleos -u https://api-kylin.eosasia.one get table dacincubator dacincubator market
 
 
 #
@@ -39,7 +44,7 @@ cleos -u https://api-kylin.eosasia.one push action eosio.token transfer '[ "mina
 # cleos -u https://api-kylin.eosasia.one push action happyeosslot transfer '[ "minakokojima", "dacincubator", "0.4999 HPY", "take,1.0000 EOS,eosio.token,1" ]' -p minakokojima@active
 
 # Query Table
-cleos -u https://api-kylin.eosasia.one get table dacincubator dacincubator market
+# cleos -u https://api-kylin.eosasia.one get table dacincubator dacincubator market
 
 
 # cleos -u http://api-direct.eosasia.one get table dacincubator dacincubator txlog
