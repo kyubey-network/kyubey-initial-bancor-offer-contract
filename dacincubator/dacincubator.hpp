@@ -6,7 +6,6 @@
 #include "kyubey.hpp"
 #include "utils.hpp"
 
-#define EOS S(4, EOS)
 #define TOKEN_CONTRACT N(eosio.token)
 
 using namespace eosio;

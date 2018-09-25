@@ -17,7 +17,8 @@
 #include <eosiolib/transaction.hpp>
 
 #define EOS_SYMBOL S(4, EOS)
-#define KBY_SYMBOL S(4, KBYY)
+#define KBY_SYMBOL S(4, KBY)
+
 typedef double real_type;
 
 using eosio::token;
@@ -48,8 +49,6 @@ class kyubey : public token {
         }
 
         void sell(account_name account, asset in) {
-
-            //return;
             
             sub_balance(account, in);          
             asset out;
@@ -93,7 +92,6 @@ class kyubey : public token {
             } 
 
             asset sell(uint64_t in) {
-                //uint64_t eos_return = (((supply.amount << 1) - in) * in / 2 / 10000 / K);
                 supply.amount -= in;
                 uint64_t new_balance = ((real_type)supply.amount * supply.amount) / 2 / K / 10000;
                 uint64_t delta_balance = balance.amount - new_balance;

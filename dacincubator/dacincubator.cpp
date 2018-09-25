@@ -21,18 +21,13 @@ void dacincubator::init() {
             m.balance.amount = init_dummy_balance;
             m.balance.symbol = EOS_SYMBOL;
             m.progress = 0;
-        });
-        
+        });        
         create(_self, asset(21000000ll * 10000ll, KBY_SYMBOL));
-    } else {
-
     }
 }
 
 void dacincubator::test() {
     require_auth(_self);
-
-
 }
 
 void dacincubator::receipt(const rec& recept) {
@@ -41,22 +36,11 @@ void dacincubator::receipt(const rec& recept) {
     
 void dacincubator::onTransfer(account_name from, account_name to, asset eos, std::string memo) {        
     
-    /*
-    if (from == _self) {
-        pendingtx.emplace(_self, [&](auto &t) {
-            t.id = pendingtx.available_primary_key();     
-            t.from = from;
-            t.to = to;
-            t.quantity = eos;
-            t.memo = memo;
-        });
-        return;
-    }
-    */
-
     if (to != _self) {
         return;
     }
+
+    eosio_assert(from == N(eospinduoduo), "only group buy is can buy");
 
     require_auth(from);
     eosio_assert(eos.is_valid(), "Invalid token transfer");
