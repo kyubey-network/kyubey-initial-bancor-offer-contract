@@ -149,7 +149,6 @@ namespace eosio {
             eosio_assert( quantity.symbol == st.supply.symbol, "symbol precision mismatch" );
             eosio_assert( memo.size() <= 256, "memo has more than 256 bytes" );
 
-
             sub_balance( from, quantity );
             add_balance( to, quantity, from );
       }
@@ -165,7 +164,7 @@ namespace eosio {
                   from_acnts.erase( from );
             } else {
                   from_acnts.modify( from, owner, [&]( auto& a ) {
-                  a.balance -= value;
+                        a.balance -= value;
                   });
             }
       }
@@ -176,11 +175,11 @@ namespace eosio {
             auto to = to_acnts.find( value.symbol.name() );
             if( to == to_acnts.end() ) {
                   to_acnts.emplace( ram_payer, [&]( auto& a ){
-                  a.balance = value;
+                        a.balance = value;
                   });
             } else {
                   to_acnts.modify( to, 0, [&]( auto& a ) {
-                  a.balance += value;
+                        a.balance += value;
                   });
             }
       }      

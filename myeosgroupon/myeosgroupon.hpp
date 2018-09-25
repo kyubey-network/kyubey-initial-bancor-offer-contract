@@ -5,7 +5,8 @@
 #include <eosiolib/contract.hpp>
 #include <eosiolib/transaction.hpp>
 
-#define EOS S(4, EOS)
+#define EOS_SYMBOL S(4, EOS)
+#define KBY_SYMBOL S(4, KBY)
 #define TOKEN_CONTRACT N(eosio.token)
 
 using namespace eosio;
@@ -13,10 +14,10 @@ using namespace std;
 
 typedef double real_type;
 
-class eospinduoduo : public contract
+class myeosgroupon : public contract
 {
 public:
-    eospinduoduo(account_name self) :
+    myeosgroupon(account_name self) :
         contract(self),
         global(_self, _self), 
         orders(_self, _self) {
@@ -54,7 +55,7 @@ public:
         asset supply;
         time claim_time;
         uint64_t primary_key() const { return id; }
-        EOSLIB_SERIALIZE(global, (id)(defer_id)(reserve)(suuply)(claim_time)) 
+        EOSLIB_SERIALIZE(global, (id)(defer_id)(reserve)(supply)(claim_time)) 
     };
     typedef eosio::multi_index<N(global), global> global_index;
     global_index global;                 
@@ -106,12 +107,12 @@ extern "C"
     void apply(uint64_t receiver, uint64_t code, uint64_t action)
     {
         auto self = receiver;
-        eospinduoduo thiscontract(self);
+        myeosgroupon thiscontract(self);
         if ((code == N(eosio.token)) && (action == N(transfer))) {
-            execute_action(&thiscontract, &eospinduoduo::onTransfer);
+            execute_action(&thiscontract, &myeosgroupon::onTransfer);
             return;
         }
         if (code != receiver) return;                              
-        switch (action) {EOSIO_API(eospinduoduo, (transfer)(init)(test))}
+        switch (action) {EOSIO_API(myeosgroupon, (transfer)(init)(test))}
     }
 }
