@@ -3,6 +3,8 @@
         "initializer_list": "cpp",
         "iterator": "cpp",
         "string": "cpp",
-        "string_view": "cpp"
+        "string_view": "cpp",
+        "algorithm": "cpp",
+        "limits": "cpp"
     }
 }

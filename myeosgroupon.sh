@@ -3,56 +3,56 @@
 # -u https://api-kylin.eosasia.one
 
 cleos wallet unlock --password PW5JaGpLtoM1vtD1WxiAC4RDsr82FRUczmKgocw1KJZqVahB4LZ1u
-/usr/local/eosio/bin/eosiocpp -g eospinduoduo/eospinduoduo.abi eospinduoduo/eospinduoduo.cpp
-/usr/local/eosio/bin/eosiocpp -o eospinduoduo/eospinduoduo.wast eospinduoduo/eospinduoduo.cpp
+/usr/local/eosio/bin/eosiocpp -g myeosgroupon/myeosgroupon.abi myeosgroupon/myeosgroupon.cpp
+/usr/local/eosio/bin/eosiocpp -o myeosgroupon/myeosgroupon.wast myeosgroupon/myeosgroupon.cpp
 
 # Set Contract
-cleos -u https://api-kylin.eosasia.one set contract eospinduoduo eospinduoduo -p eospinduoduo@active
+cleos -u http://api-direct.eosasia.one  set contract myeosgroupon myeosgroupon -p myeosgroupon@active
 
-#cleos -u http://api-direct.eosasia.one push action eospinduoduo retrieve '[ "wqeosram1111", 50, "200000.0000 TPT @ tokendappub" ]' -p eospinduoduo@active
-# cleos -u http://api-direct.eosasia.one push action eospinduoduo test '[ "" ]' -p eospinduoduo@active
+#cleos -u http://api-direct.eosasia.one push action myeosgroupon retrieve '[ "wqeosram1111", 50, "200000.0000 TPT @ tokendappub" ]' -p myeosgroupon@active
+# cleos -u http://api-direct.eosasia.one push action myeosgroupon test '[ "" ]' -p myeosgroupon@active
 
 #eosowangfeng TPT
 #cleos -u http://api-direct.eosasia.one push action sieosmainnet transfer '[ "sieosmainnet", "jacklighteos", "1.9000 EOS", "eosowangfeng TPT"]' -p sieosmainnet@active
 
 # ask order
-#cleos -u http://api-direct.eosasia.one push action eosio.token transfer '[ "minakokojima", "eospinduoduo", "0.0001 EOS", "ask,0.0010 HPY,happyeosslot" ]' -p minakokojima@active
+#cleos -u http://api-direct.eosasia.one push action eosio.token transfer '[ "minakokojima", "myeosgroupon", "0.0001 EOS", "ask,0.0010 HPY,happyeosslot" ]' -p minakokojima@active
 
 # take order
-# cleos -u https://api-kylin.eosasia.one push action eosio.token transfer '[ "minakokojima", "eospinduoduo", "0.5000 EOS", "take,1.0000 HPY,happyeosslot,0" ]' -p minakokojima@active
+# cleos -u https://api-kylin.eosasia.one push action eosio.token transfer '[ "minakokojima", "myeosgroupon", "0.5000 EOS", "take,1.0000 HPY,happyeosslot,0" ]' -p minakokojima@active
 
-# cleos -u https://api-kylin.eosasia.one push action happyeosslot transfer '[ "minakokojima", "eospinduoduo", "0.0001 HPY", "ask,0.0001 EOS,eosio.token" ]' -p minakokojima@active
+# cleos -u https://api-kylin.eosasia.one push action happyeosslot transfer '[ "minakokojima", "myeosgroupon", "0.0001 HPY", "ask,0.0001 EOS,eosio.token" ]' -p minakokojima@active
 
-# cleos -u https://api-kylin.eosasia.one push action eosio.token transfer '[ "minakokojima", "eospinduoduo", "0.0001 EOS", "take,0.0001 HPY,happyeosslot,2" ]' -p minakokojima@active
+# cleos -u https://api-kylin.eosasia.one push action eosio.token transfer '[ "minakokojima", "myeosgroupon", "0.0001 EOS", "take,0.0001 HPY,happyeosslot,2" ]' -p minakokojima@active
 #// take,1.0000 HPY,happyeosslot,0
 
 
-# cleos -u https://api-kylin.eosasia.one push action happyeosslot transfer '[ "minakokojima", "eospinduoduo", "0.4999 HPY", "take,1.0000 EOS,eosio.token,1" ]' -p minakokojima@active
+# cleos -u https://api-kylin.eosasia.one push action happyeosslot transfer '[ "minakokojima", "myeosgroupon", "0.4999 HPY", "take,1.0000 EOS,eosio.token,1" ]' -p minakokojima@active
 
 # Query Table
 # cleos -u https://api-kylin.eosasia.one get table happyeosslot happyeosslot accounts
 
 
-# cleos -u http://api-direct.eosasia.one get table eospinduoduo eospinduoduo txlog
+# cleos -u http://api-direct.eosasia.one get table myeosgroupon myeosgroupon txlog
 
 
-# cleos -u https://api-kylin.eosasia.one get table eospinduoduo happyeosslot order
+# cleos -u https://api-kylin.eosasia.one get table myeosgroupon happyeosslot order
 
-# cleos -u https://api-kylin.eosasia.one get table eospinduoduo eosio.token order
+# cleos -u https://api-kylin.eosasia.one get table myeosgroupon eosio.token order
 
 # /usr/local/eosio/bin/eosiocpp -g pomelo/pomelo.abi pomelo/pomelo.cpp
 # 
 # cleos -u https://api-kylin.eosasia.one push action eosio.token transfer '[ "minakokojima", "happyeosslot", "10.0000 EOS", "buy" ]' -p minakokojima@active
 
-# cleos -u https://api-kylin.eosasia.one push action happyeosslot transfer '[ "minakokojima", "eospinduoduo", "1.0000 HPY", "ask,0.5000 EOS,eosio.token" ]' -p minakokojima@active
+# cleos -u https://api-kylin.eosasia.one push action happyeosslot transfer '[ "minakokojima", "myeosgroupon", "1.0000 HPY", "ask,0.5000 EOS,eosio.token" ]' -p minakokojima@active
 
 
 # cleos -u https://api-kylin.eosasia.one set contract happyeosslot happyeosslot -p happyeosslot@active
 
 
-#cleos -u https://api-kylin.eosasia.one push action happyeosslot transfer '[ "minakokojima", "eospinduoduo", "1.0000 HPY", "ask,2.0000 HPY,eosio.token" ]' -p minakokojima@active
+#cleos -u https://api-kylin.eosasia.one push action happyeosslot transfer '[ "minakokojima", "myeosgroupon", "1.0000 HPY", "ask,2.0000 HPY,eosio.token" ]' -p minakokojima@active
 
-# cleos -u https://api-kylin.eosasia.one push action eospinduoduo  '[]' -p minakokojima@active
+# cleos -u https://api-kylin.eosasia.one push action myeosgroupon  '[]' -p minakokojima@active
 
 # cleos -u https://api-kylin.eosasia.one set contract pomelodex111 pomelo -p pomelodex111@active
 # cleos -u https://api-kylin.eosasia.one set contract pomelodex111 pomelo -p pomelodex111@active

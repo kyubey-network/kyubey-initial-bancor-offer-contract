@@ -2,53 +2,61 @@
  *  @dev minakokojima
  */
 
-#include "eospinduoduo.hpp"
+#include "myeosgroupon.hpp"
 
-void eospinduoduo::init() {
+const uint64_t PERIOD = 60;
+
+void myeosgroupon::init() {
     require_auth(_self); 
 
     if (global.begin() == global.end()) {
         global.emplace(_self, [&](auto &g) {
-            g.claim_time = now() + 3600;
+            g.claim_time = 1537948800;
         });
     } else {
         global.modify(global.begin(), 0, [&](auto &g) {
-            g.claim_time = now() + 3600;
+            g.claim_time = 1537948800;
         });
     } 
 }
 
-void eospinduoduo::test() {
+void myeosgroupon::test() {
     require_auth(_self);
 }
 
-void eospinduoduo::receipt(const rec& recept) {
+void myeosgroupon::receipt(const rec& recept) {
     require_auth(_self);
 }
 
-void eospinduoduo::claim() {    
+void myeosgroupon::claim() {    
     require_auth(_self);
 
     auto g = global.begin();
-    eosio_assert(now() >= g->claim_time, "The KBY group buy will start at 2018-08-23 T 20:00:00");
+
+    eosio_assert(now() >= g->claim_time + PERIOD, "The current group buy is running");
 
     action(
         permission_level{_self, N(active)},
         TOKEN_CONTRACT, N(transfer),
-        make_tuple(_self, N(dacincubator), global.begin()->reserve, string("group buy.")))
+        make_tuple(_self, N(dacincubator), global.begin()->reserve, string("buy")))
     .send();
 
+    const auto& sym = eosio::symbol_type(KBY_SYMBOL).name();
+    eosio::currency::accounts supply_account(N(dacincubator), _self);
+    auto supply = supply_account.get(sym).balance;
+
     global.modify(g, 0, [&](auto &g) {
-        g.claim_time += 24 * 60 * 60 * 1000;
+        g.reserve = asset(0, EOS_SYMBOL);
+        g.supply = supply;
     });
 }
 
-void eospinduoduo::distribute() {
+void myeosgroupon::distribute() {
     require_auth(_self);
     
     uint64_t cnt = 0;
     while (orders.begin() != orders.end()) {
-        if (cnt == 10) break;
+        if (cnt == 10) return;
         auto itr = orders.begin();
         auto g = global.begin();
         auto delta = g->supply;
@@ -58,14 +66,20 @@ void eospinduoduo::distribute() {
         send_defer_action(
             permission_level{_self, N(active)},
             TOKEN_CONTRACT, N(transfer),
-            make_tuple(_self, itr->account, delta, string("distribute KBY token"))
+            make_tuple(_self, itr->account, delta, string("distribute token"))
         );    
             
         orders.erase(itr);        
     }
+
+    global.modify(global.begin(), 0, [&](auto &g) {
+        if (g.claim_time < now()) {
+            g.claim_time += PERIOD;
+        }
+    });
 }
     
-void eospinduoduo::onTransfer(account_name from, account_name to, asset eos, std::string memo) {        
+void myeosgroupon::onTransfer(account_name from, account_name to, asset eos, std::string memo) {        
     if (from == _self) {
         eosio_assert(false, "illegal operation.");
         return;
@@ -75,6 +89,12 @@ void eospinduoduo::onTransfer(account_name from, account_name to, asset eos, std
         return;
     }
 
+
+    auto g = global.begin();
+    eosio_assert(now() >= g->claim_time, "The current group buy is not start");
+    eosio_assert(now() < g->claim_time + PERIOD, "The current group buy is closed");
+
+
     orders.emplace(_self, [&](auto& o) {
         o.id = orders.available_primary_key();
         o.account = from;
@@ -83,4 +103,14 @@ void eospinduoduo::onTransfer(account_name from, account_name to, asset eos, std
     global.modify(global.begin(), 0, [&](auto &g) {
         g.reserve += eos;
     });
+
+    const rec _rec{
+        .account = from,
+        .quantity = eos,
+        .time_stamp = now()        
+    };
+
+    action(permission_level{_self, N(active)},
+        _self, N(receipt), _rec)
+    .send();
 }

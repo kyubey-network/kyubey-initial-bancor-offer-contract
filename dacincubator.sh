@@ -7,10 +7,13 @@ cleos wallet unlock --password PW5JaGpLtoM1vtD1WxiAC4RDsr82FRUczmKgocw1KJZqVahB4
 /usr/local/eosio/bin/eosiocpp -o dacincubator/dacincubator.wast dacincubator/dacincubator.cpp
 
 # Set Contract
-cleos -u https://api-kylin.eosasia.one set contract dacincubator dacincubator -p dacincubator@active
+cleos -u http://api-direct.eosasia.one  set contract dacincubator dacincubator -p dacincubator@active
 
 # cleos -u https://api-kylin.eosasia.one push action dacincubator test '[""]' -p dacincubator@active
-cleos -u https://api-kylin.eosasia.one push action dacincubator init '[""]' -p dacincubator@active
+#cleos -u https://api-kylin.eosasia.one push action dacincubator init '[""]' -p dacincubator@active
+
+#cleos -u https://api-kylin.eosasia.one push action dacincubator transfer '[ "minakokojima", "dacincubator", "499.9937 KBYY", "sell"]' -p minakokojima@active
+
 
 # cleos -u https://api-kylin.eosasia.one get table dacincubator dacincubator accounts
 
