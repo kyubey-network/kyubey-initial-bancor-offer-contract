@@ -64,7 +64,29 @@ void eospinduoduo::distribute() {
         orders.erase(itr);        
     }
 }
-    
+
+
+void eospinduoduo::joingroup( const account_name account, asset eos ) {    
+    require_auth(_self);
+
+    auto o = orders.find( account );
+    if ( o == orders.end()) { // Order not found
+        orders.emplace(_self, [&](auto& player){
+            o.id = orders.available_primary_key() ; 
+            o.account = account ;
+            o.quantity = eos ;
+        }) ;
+    } 
+    else return eosio_assert( false, "alreay in group.");
+
+    global.modify(global.begin(), 0, [&](auto &g) {
+        g.reserve += eos;
+    });
+
+    return ;
+}
+
+
 void eospinduoduo::onTransfer(account_name from, account_name to, asset eos, std::string memo) {        
     if (from == _self) {
         eosio_assert(false, "illegal operation.");
@@ -75,12 +97,13 @@ void eospinduoduo::onTransfer(account_name from, account_name to, asset eos, std
         return;
     }
 
+    if ( memo == "join" ) joingroup( from, eos ) ;
+
+/*
     orders.emplace(_self, [&](auto& o) {
         o.id = orders.available_primary_key();
         o.account = from;
         o.quantity = eos;
-    });
-    global.modify(global.begin(), 0, [&](auto &g) {
-        g.reserve += eos;
-    });
+    });*/
+
 }
