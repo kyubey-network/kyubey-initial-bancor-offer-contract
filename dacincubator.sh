@@ -12,12 +12,11 @@ cleos -u http://api-direct.eosasia.one  set contract dacincubator dacincubator -
 # cleos -u https://api-kylin.eosasia.one push action dacincubator test '[""]' -p dacincubator@active
 #cleos -u http://api-direct.eosasia.one push action dacincubator init '[""]' -p dacincubator@active
 
-#cleos -u https://api-kylin.eosasia.one push action dacincubator transfer '[ "minakokojima", "dacincubator", "499.9937 KBYY", "sell"]' -p minakokojima@active
+#cleos -u http://api-direct.eosasia.one push action dacincubator transfer '[ "minakokojima", "dacincubator", "499.9937 KBYY", "sell"]' -p minakokojima@active
 
 
 # cleos -u https://api-kylin.eosasia.one get table dacincubator dacincubator accounts
-
-# cleos -u https://api-kylin.eosasia.one push action eosio.token transfer '[ "minakokojima", "dacincubator", "1.0000 EOS", "buy"]' -p minakokojima@active
+cleos -u http://api-direct.eosasia.one push action eosio.token transfer '[ "minakokojima", "dacincubator", "1.0000 EOS", "buy"]' -p minakokojima@active
 
 # cleos -u https://api-kylin.eosasia.one push action dacincubator transfer '[ "minakokojima", "dacincubator", "499.9937 KBY", "sell"]' -p minakokojima@active
 

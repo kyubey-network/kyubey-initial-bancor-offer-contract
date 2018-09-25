@@ -73,7 +73,7 @@ void dacincubator::onTransfer(account_name from, account_name to, asset eos, std
 
 void dacincubator::transfer(account_name from, account_name to, asset quantity, std::string memo) {        
 
-    eosio_assert(now() >= 1537891200, "can only be trade after 09/25/2018 @ 16:00pm (UTC).");
+    //eosio_assert(now() >= 1537891200, "can only be trade after 09/25/2018 @ 16:00pm (UTC).");
 
     /*uint64_t t = 0;
     if (1537891200 + 60*60*24 >= now()) {
