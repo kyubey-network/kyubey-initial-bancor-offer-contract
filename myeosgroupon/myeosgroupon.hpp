@@ -64,7 +64,12 @@ public:
     struct order {
         account_name  account;
         asset         quantity;
+<<<<<<< HEAD
+        // uint64_t primary_key() const { return id; }
+        // auto get_account() const { return account; }
+=======
         account_name primary_key() const { return account; }
+>>>>>>> f3572487303780454ff650b5bfc3176b1897c0bb
         void release() {
         }
         EOSLIB_SERIALIZE(order, (account)(quantity)) 
