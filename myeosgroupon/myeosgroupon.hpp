@@ -66,6 +66,7 @@ public:
         account_name  account;
         asset         quantity;
         uint64_t primary_key() const { return id; }
+        // auto get_account() const { return account; }
         void release() {
         }
         EOSLIB_SERIALIZE(order, (id)(account)(quantity)) 

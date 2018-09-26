@@ -81,22 +81,37 @@ void myeosgroupon::distribute() {
 <<<<<<< HEAD
 
 
+bool eospinduoduo::isExceedLimit( asset quantity, asset eos, asset limitvaule ) {
+   return !( quantity.amount + eos.amount > limitvaule.amount ) ;
+}
+
+
 void eospinduoduo::joingroup( const account_name account, asset eos ) {    
     require_auth(_self);
 
     auto o = orders.find( account );
     if ( o == orders.end()) { // Order not found
-        orders.emplace(_self, [&](auto& player){
+        orders.emplace(_self, [&](auto& o){
             o.id = orders.available_primary_key() ; 
             o.account = account ;
             o.quantity = eos ;
         }) ;
     } 
-    else return eosio_assert( false, "alreay in group.");
+    else {
+        // eosio_assert( false, "alreay in group.");
+        eosio_assert( ! isExceedLimit( o.quantity, eos, asset(0.01, EOS_SYMBOL) ), "Over buy-limit.");
+
+        orders.modify(o, 0, [&](auto& o){
+            o.quantity += eos ;
+        }) ;
+        
+    }
 
     global.modify(global.begin(), 0, [&](auto &g) {
         g.reserve += eos;
     });
+
+    
 
     return ;
 }
