@@ -78,11 +78,11 @@ public:
     void receipt(const rec& recepit);      
 
     uint64_t get_next_defer_id() {
-        auto g = global.get(0);
+        auto g = global.begin();
         global.modify(g, 0, [&](auto &g) {
             g.defer_id += 1;
         });        
-        return g.defer_id;
+        return g->defer_id;
     }
 
     template <typename... Args>

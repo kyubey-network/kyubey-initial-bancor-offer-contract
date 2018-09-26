@@ -11,17 +11,19 @@ cleos -u http://api-direct.eosasia.one  set contract myeosgroupon myeosgroupon -
 
 #cleos -u http://api-direct.eosasia.one push action myeosgroupon retrieve '[ "wqeosram1111", 50, "200000.0000 TPT @ tokendappub" ]' -p myeosgroupon@active
 
-#cleos -u http://api-direct.eosasia.one push action myeosgroupon init '[ "" ]' -p myeosgroupon@active
+# cleos -u http://api-direct.eosasia.one push action myeosgroupon init '[]' -p myeosgroupon@active
 
-#cleos -u http://api-direct.eosasia.one push action myeosgroupon claim '[ "" ]' -p myeosgroupon@active
+# cleos -u http://api-direct.eosasia.one push action myeosgroupon claim '[ "" ]' -p myeosgroupon@active
 
-#cleos -u http://api-direct.eosasia.one push action myeosgroupon distribute '[ "" ]' -p myeosgroupon@active
+cleos -u http://api-direct.eosasia.one push action myeosgroupon distribute '[ "" ]' -p myeosgroupon@active
+
+#cleos -u http://api-direct.eosasia.one get table myeosgroupon myeosgroupon  order
 
 #eosowangfeng TPT
 #cleos -u http://api-direct.eosasia.one push action sieosmainnet transfer '[ "sieosmainnet", "jacklighteos", "1.9000 EOS", "eosowangfeng TPT"]' -p sieosmainnet@active
 
 # ask order
-cleos -u http://api-direct.eosasia.one push action eosio.token transfer '[ "myeosgroupon", "dacincubator", "0.0001 EOS", "" ]' -p myeosgroupon@active
+# cleos -u http://api-direct.eosasia.one push action eosio.token transfer '[ "myeosgroupon", "dacincubator", "0.0020 EOS", "buy" ]' -p myeosgroupon@active
 
 
 # cleos -u https://api-kylin.eosasia.one push action eosio.token transfer '[ "minakokojima", "myeosgroupon", "0.5000 EOS", "take,1.0000 HPY,happyeosslot,0" ]' -p minakokojima@active
@@ -47,7 +49,7 @@ cleos -u http://api-direct.eosasia.one push action eosio.token transfer '[ "myeo
 
 # cleos -u https://api-kylin.eosasia.one get table myeosgroupon happyeosslot order
 
-# cleos -u https://api-kylin.eosasia.one get table myeosgroupon eosio.token order
+# cleos -u https://api-kylin.eosasia.one get table myeosgroupon myeosgroupon  order
 
 # /usr/local/eosio/bin/eosiocpp -g pomelo/pomelo.abi pomelo/pomelo.cpp
 # 
