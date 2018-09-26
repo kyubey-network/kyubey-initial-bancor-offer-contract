@@ -5,6 +5,7 @@
 #include "myeosgroupon.hpp"
 
 const uint64_t PERIOD = 60;
+const uint64_t QUOTA = 100;
 
 void myeosgroupon::init() {
     require_auth(_self); 
@@ -78,35 +79,8 @@ void myeosgroupon::distribute() {
         }
     });
 }
-<<<<<<< HEAD
-
-
-void eospinduoduo::joingroup( const account_name account, asset eos ) {    
-    require_auth(_self);
-
-    auto o = orders.find( account );
-    if ( o == orders.end()) { // Order not found
-        orders.emplace(_self, [&](auto& player){
-            o.id = orders.available_primary_key() ; 
-            o.account = account ;
-            o.quantity = eos ;
-        }) ;
-    } 
-    else return eosio_assert( false, "alreay in group.");
-
-    global.modify(global.begin(), 0, [&](auto &g) {
-        g.reserve += eos;
-    });
-
-    return ;
-}
-
-
-void eospinduoduo::onTransfer(account_name from, account_name to, asset eos, std::string memo) {        
-=======
     
 void myeosgroupon::onTransfer(account_name from, account_name to, asset eos, std::string memo) {        
->>>>>>> a82ea38b49bd7e8b95ead68019be9a7176081df3
     if (from == _self) {
         eosio_assert(false, "illegal operation.");
         return;
@@ -116,32 +90,27 @@ void myeosgroupon::onTransfer(account_name from, account_name to, asset eos, std
         return;
     }
 
-<<<<<<< HEAD
-    
-
-
-=======
-
     auto g = global.begin();
     eosio_assert(now() >= g->claim_time, "The current group buy is not start");
     eosio_assert(now() < g->claim_time + PERIOD, "The current group buy is closed");
 
-    if ( memo == "join" ) joingroup( from, eos ) ;
-    /*
->>>>>>> a82ea38b49bd7e8b95ead68019be9a7176081df3
-    orders.emplace(_self, [&](auto& o) {
-        o.id = orders.available_primary_key();
-        o.account = from;
-        o.quantity = eos;
-<<<<<<< HEAD
-    });
+    if (orders.find(from) == orders.end()) {
+        eosio_assert(eos.amount <= QUOTA, "over the QUOTA");
+        orders.emplace(_self, [&](auto& o) {
+            o.account = from;
+            o.quantity = eos;
+        });
+    } else {
+        orders.modify(orders.begin(), 0, [&](auto &o) {
+            eosio_assert(o.quantity.amount + eos.amount <= QUOTA, "over the QUOTA");
+            o.quantity += eos;
+        });
+    }
 
-=======
-    });
     global.modify(global.begin(), 0, [&](auto &g) {
         g.reserve += eos;
     });
-    */
+    
     const rec _rec{
         .account = from,
         .quantity = eos,
@@ -151,5 +120,4 @@ void myeosgroupon::onTransfer(account_name from, account_name to, asset eos, std
     action(permission_level{_self, N(active)},
         _self, N(receipt), _rec)
     .send();
->>>>>>> a82ea38b49bd7e8b95ead68019be9a7176081df3
 }
