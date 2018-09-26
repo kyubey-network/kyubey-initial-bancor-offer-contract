@@ -62,14 +62,17 @@ public:
 
     // @abi table global i64    
     struct order {
-        uint64_t id = 0 ;  
         account_name  account;
         asset         quantity;
-        uint64_t primary_key() const { return id; }
+<<<<<<< HEAD
+        // uint64_t primary_key() const { return id; }
         // auto get_account() const { return account; }
+=======
+        account_name primary_key() const { return account; }
+>>>>>>> f3572487303780454ff650b5bfc3176b1897c0bb
         void release() {
         }
-        EOSLIB_SERIALIZE(order, (id)(account)(quantity)) 
+        EOSLIB_SERIALIZE(order, (account)(quantity)) 
     };
     typedef eosio::multi_index<N(order), order> order_index;
     order_index orders;     
@@ -97,10 +100,7 @@ public:
         transaction trx;
         trx.actions.emplace_back(std::forward<Args>(args)...);
         trx.send(get_next_defer_id(), _self, false);
-    }
-
-    private:
-        void joingroup( const account_name account, asset eos );    
+    } 
 };
 
 extern "C"

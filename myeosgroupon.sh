@@ -7,7 +7,7 @@ cleos wallet unlock --password PW5JaGpLtoM1vtD1WxiAC4RDsr82FRUczmKgocw1KJZqVahB4
 /usr/local/eosio/bin/eosiocpp -o myeosgroupon/myeosgroupon.wast myeosgroupon/myeosgroupon.cpp
 
 # Set Contract
-cleos -u http://api-direct.eosasia.one  set contract myeosgroupon myeosgroupon -p myeosgroupon@active
+#cleos -u http://api-direct.eosasia.one  set contract myeosgroupon myeosgroupon -p myeosgroupon@active
 
 #cleos -u http://api-direct.eosasia.one push action myeosgroupon retrieve '[ "wqeosram1111", 50, "200000.0000 TPT @ tokendappub" ]' -p myeosgroupon@active
 # cleos -u http://api-direct.eosasia.one push action myeosgroupon test '[ "" ]' -p myeosgroupon@active
