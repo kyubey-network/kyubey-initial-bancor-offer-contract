@@ -40,7 +40,7 @@ void dacincubator::onTransfer(account_name from, account_name to, asset eos, std
         return;
     }
 
-    // eosio_assert(from == N(myeosgroupon), "only myeosgroupon is allowed to buy at this moment");
+    eosio_assert(from == N(myeosgroupon), "only myeosgroupon is allowed to buy at this moment");
 
     require_auth(from);
     eosio_assert(eos.is_valid(), "Invalid token transfer");

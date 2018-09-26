@@ -8,6 +8,7 @@
 #define EOS_SYMBOL S(4, EOS)
 #define KBY_SYMBOL S(4, KBY)
 #define TOKEN_CONTRACT N(eosio.token)
+#define TARGET_CONTRACT N(dacincubator)
 
 using namespace eosio;
 using namespace std;
@@ -29,12 +30,6 @@ public:
     void clean();
     // @abi action 
     void test();
-
-    // @abi action    
-    void transfer(account_name   from,
-                  account_name   to,
-                  asset          quantity,
-                  string         memo);
     
     void onTransfer(account_name   from,
                     account_name   to,
@@ -60,7 +55,7 @@ public:
     typedef eosio::multi_index<N(global), global> global_index;
     global_index global;                 
 
-    // @abi table global i64    
+    // @abi table order i64    
     struct order {
         account_name  account;
         asset         quantity;
@@ -109,6 +104,6 @@ extern "C"
             return;
         }
         if (code != receiver) return;                              
-        switch (action) {EOSIO_API(myeosgroupon, (transfer)(init)(test))}
+        switch (action) {EOSIO_API(myeosgroupon, (init)(clean)(test)(claim)(distribute))}
     }
 }

@@ -5,6 +5,7 @@
         "string": "cpp",
         "string_view": "cpp",
         "algorithm": "cpp",
-        "limits": "cpp"
+        "limits": "cpp",
+        "tuple": "cpp"
     }
 }

@@ -4,7 +4,9 @@
 
 #include "myeosgroupon.hpp"
 
-const uint64_t PERIOD = 60;
+
+const uint64_t START = 1537920000 - 8 * 60 * 60 + 18 * 60 * 60;
+const uint64_t PERIOD = 6 * 60 * 60;
 const uint64_t QUOTA = 100;
 
 void myeosgroupon::init() {
@@ -12,13 +14,21 @@ void myeosgroupon::init() {
 
     if (global.begin() == global.end()) {
         global.emplace(_self, [&](auto &g) {
-            g.claim_time = 1537948800;
+            g.claim_time = START;
+            g.reserve = asset(0, EOS_SYMBOL);        
+            g.supply = asset(0, KBY_SYMBOL);
         });
     } else {
         global.modify(global.begin(), 0, [&](auto &g) {
-            g.claim_time = 1537948800;
+            g.claim_time = START;
+            g.reserve = asset(200, EOS_SYMBOL);        
+            g.supply = asset(0, KBY_SYMBOL);            
         });
     } 
+}
+
+void myeosgroupon::clean() {
+    require_auth(_self);
 }
 
 void myeosgroupon::test() {
@@ -38,18 +48,20 @@ void myeosgroupon::claim() {
 
     action(
         permission_level{_self, N(active)},
-        TOKEN_CONTRACT, N(transfer),
-        make_tuple(_self, N(dacincubator), global.begin()->reserve, string("buy")))
+        N(eosio.token), N(transfer),
+        make_tuple(_self, TARGET_CONTRACT, g->reserve, string("buy")))
     .send();
 
     const auto& sym = eosio::symbol_type(KBY_SYMBOL).name();
-    eosio::currency::accounts supply_account(N(dacincubator), _self);
-    auto supply = supply_account.get(sym).balance;
+    eosio::currency::accounts supply_account(TARGET_CONTRACT, _self);
+    auto supply = supply_account.get(sym).balance;    
 
+    /*
     global.modify(g, 0, [&](auto &g) {
         g.reserve = asset(0, EOS_SYMBOL);
         g.supply = supply;
     });
+    */
 }
 
 void myeosgroupon::distribute() {
@@ -66,9 +78,9 @@ void myeosgroupon::distribute() {
 
         send_defer_action(
             permission_level{_self, N(active)},
-            TOKEN_CONTRACT, N(transfer),
+            TARGET_CONTRACT, N(transfer),
             make_tuple(_self, itr->account, delta, string("distribute token"))
-        );    
+        );
             
         orders.erase(itr);        
     }
@@ -81,10 +93,11 @@ void myeosgroupon::distribute() {
 }
     
 void myeosgroupon::onTransfer(account_name from, account_name to, asset eos, std::string memo) {        
-    if (from == _self) {
+    
+    /*if (from == _self) {
         eosio_assert(false, "illegal operation.");
         return;
-    }
+    }*/
 
     if (to != _self) {
         return;
@@ -101,7 +114,7 @@ void myeosgroupon::onTransfer(account_name from, account_name to, asset eos, std
             o.quantity = eos;
         });
     } else {
-        orders.modify(orders.begin(), 0, [&](auto &o) {
+        orders.modify(orders.find(from), 0, [&](auto &o) {
             eosio_assert(o.quantity.amount + eos.amount <= QUOTA, "over the QUOTA");
             o.quantity += eos;
         });
