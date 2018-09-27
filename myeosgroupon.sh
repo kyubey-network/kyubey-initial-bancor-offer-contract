@@ -13,11 +13,15 @@ cleos -u http://api-direct.eosasia.one  set contract myeosgroupon myeosgroupon -
 
 # cleos -u http://api-direct.eosasia.one push action myeosgroupon init '[]' -p myeosgroupon@active
 
-# cleos -u http://api-direct.eosasia.one push action myeosgroupon claim '[ "" ]' -p myeosgroupon@active
+#cleos -u http://api-direct.eosasia.one push action myeosgroupon claim '[ "" ]' -p myeosgroupon@active
 
 cleos -u http://api-direct.eosasia.one push action myeosgroupon distribute '[ "" ]' -p myeosgroupon@active
 
 #cleos -u http://api-direct.eosasia.one get table myeosgroupon myeosgroupon  order
+
+
+#cleos -u http://api-direct.eosasia.one push action dacincubator transfer '[ "myeosgroupon", "minakokojima", "0.0010 KBY", "" ]' -p myeosgroupon@active
+
 
 #eosowangfeng TPT
 #cleos -u http://api-direct.eosasia.one push action sieosmainnet transfer '[ "sieosmainnet", "jacklighteos", "1.9000 EOS", "eosowangfeng TPT"]' -p sieosmainnet@active

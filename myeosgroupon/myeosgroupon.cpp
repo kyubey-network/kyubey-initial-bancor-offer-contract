@@ -56,11 +56,11 @@ void myeosgroupon::claim() {
 
     eosio_assert(now() >= g->claim_time + PERIOD, "The current group buy is running");
 
-    action(
+    /*action(
         permission_level{_self, N(active)},
         N(eosio.token), N(transfer),
         make_tuple(_self, TARGET_CONTRACT, g->reserve, string("buy")))
-    .send();
+    .send();*/
 
     const auto& sym = eosio::symbol_type(KBY_SYMBOL).name();
     accounts supply_account(TARGET_CONTRACT, _self);
@@ -93,14 +93,14 @@ void myeosgroupon::distribute() {
             permission_level{_self, N(active)},
             TARGET_CONTRACT, N(transfer),
             make_tuple(_self, itr->account, delta, string("distribute token"))
-        .send();
+        ).send();
 
         ++cnt; 
         orders.erase(itr);       
     }
     
     global.modify(global.begin(), 0, [&](auto &g) {
-        if (g.claim_time < now()) {
+        while (g.claim_time + PERIOD < now()) {
             g.claim_time += PERIOD;
         }
         g.reserve = asset(0, EOS_SYMBOL);
