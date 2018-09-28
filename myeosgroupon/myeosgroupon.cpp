@@ -54,9 +54,9 @@ void myeosgroupon::claim() {
 
     auto g = global.begin();
 
-    eosio_assert(now() >= g->claim_time + PERIOD, "The current group buy is running");
+    /*eosio_assert(now() >= g->claim_time + PERIOD, "The current group buy is running");
 
-    /*action(
+    action(
         permission_level{_self, N(active)},
         N(eosio.token), N(transfer),
         make_tuple(_self, TARGET_CONTRACT, g->reserve, string("buy")))
@@ -77,7 +77,7 @@ void myeosgroupon::distribute() {
         
     uint64_t cnt = 0;
     while (orders.begin() != orders.end()) {
-        if (cnt == 10) return;
+        if (cnt == 4) return;
         auto itr = orders.begin();
         
         auto delta = g->supply;
@@ -89,11 +89,13 @@ void myeosgroupon::distribute() {
             TARGET_CONTRACT, N(transfer),
             make_tuple(_self, itr->account, delta, string("distribute token"))
         );*/
-        action(
-            permission_level{_self, N(active)},
-            TARGET_CONTRACT, N(transfer),
-            make_tuple(_self, itr->account, delta, string("distribute token"))
-        ).send();
+        if (delta.amount > 0){
+            action(
+                permission_level{_self, N(active)},
+                TARGET_CONTRACT, N(transfer),
+                make_tuple(_self, itr->account, delta, string("distribute token"))
+            ).send();
+        }
 
         ++cnt; 
         orders.erase(itr);       

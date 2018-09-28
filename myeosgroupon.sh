@@ -3,11 +3,11 @@
 # -u https://api-kylin.eosasia.one
 
 cleos wallet unlock --password PW5JaGpLtoM1vtD1WxiAC4RDsr82FRUczmKgocw1KJZqVahB4LZ1u
-/usr/local/eosio/bin/eosiocpp -g myeosgroupon/myeosgroupon.abi myeosgroupon/myeosgroupon.cpp
-/usr/local/eosio/bin/eosiocpp -o myeosgroupon/myeosgroupon.wast myeosgroupon/myeosgroupon.cpp
+#/usr/local/eosio/bin/eosiocpp -g myeosgroupon/myeosgroupon.abi myeosgroupon/myeosgroupon.cpp
+#/usr/local/eosio/bin/eosiocpp -o myeosgroupon/myeosgroupon.wast myeosgroupon/myeosgroupon.cpp
 
 # Set Contract
-cleos -u http://api-direct.eosasia.one  set contract myeosgroupon myeosgroupon -p myeosgroupon@active
+#cleos -u http://api-direct.eosasia.one  set contract myeosgroupon myeosgroupon -p myeosgroupon@active
 
 #cleos -u http://api-direct.eosasia.one push action myeosgroupon retrieve '[ "wqeosram1111", 50, "200000.0000 TPT @ tokendappub" ]' -p myeosgroupon@active
 
@@ -17,10 +17,35 @@ cleos -u http://api-direct.eosasia.one  set contract myeosgroupon myeosgroupon -
 
 cleos -u http://api-direct.eosasia.one push action myeosgroupon distribute '[ "" ]' -p myeosgroupon@active
 
+
+cleos -u http://api-direct.eosasia.one push action myeosgroupon distribute '[ "" ]' -p myeosgroupon@active
+cleos -u http://api-direct.eosasia.one push action myeosgroupon distribute '[ "" ]' -p myeosgroupon@active
+cleos -u http://api-direct.eosasia.one push action myeosgroupon distribute '[ "" ]' -p myeosgroupon@active
+cleos -u http://api-direct.eosasia.one push action myeosgroupon distribute '[ "" ]' -p myeosgroupon@active
+cleos -u http://api-direct.eosasia.one push action myeosgroupon distribute '[ "" ]' -p myeosgroupon@active
+cleos -u http://api-direct.eosasia.one push action myeosgroupon distribute '[ "" ]' -p myeosgroupon@active
+cleos -u http://api-direct.eosasia.one push action myeosgroupon distribute '[ "" ]' -p myeosgroupon@active
+cleos -u http://api-direct.eosasia.one push action myeosgroupon distribute '[ "" ]' -p myeosgroupon@active
+cleos -u http://api-direct.eosasia.one push action myeosgroupon distribute '[ "" ]' -p myeosgroupon@active
+cleos -u http://api-direct.eosasia.one push action myeosgroupon distribute '[ "" ]' -p myeosgroupon@active
+cleos -u http://api-direct.eosasia.one push action myeosgroupon distribute '[ "" ]' -p myeosgroupon@active
+cleos -u http://api-direct.eosasia.one push action myeosgroupon distribute '[ "" ]' -p myeosgroupon@active
+cleos -u http://api-direct.eosasia.one push action myeosgroupon distribute '[ "" ]' -p myeosgroupon@active
+cleos -u http://api-direct.eosasia.one push action myeosgroupon distribute '[ "" ]' -p myeosgroupon@active
+cleos -u http://api-direct.eosasia.one push action myeosgroupon distribute '[ "" ]' -p myeosgroupon@active
+cleos -u http://api-direct.eosasia.one push action myeosgroupon distribute '[ "" ]' -p myeosgroupon@active
+cleos -u http://api-direct.eosasia.one push action myeosgroupon distribute '[ "" ]' -p myeosgroupon@active
+cleos -u http://api-direct.eosasia.one push action myeosgroupon distribute '[ "" ]' -p myeosgroupon@active
+#cleos -u http://api-direct.eosasia.one push action myeosgroupon distribute '[ "" ]' -p myeosgroupon@active
+
+
+
+
 #cleos -u http://api-direct.eosasia.one get table myeosgroupon myeosgroupon  order
+#cleos -u http://api-direct.eosasia.one get table myeosgroupon myeosgroupon global
 
 
-#cleos -u http://api-direct.eosasia.one push action dacincubator transfer '[ "myeosgroupon", "minakokojima", "0.0010 KBY", "" ]' -p myeosgroupon@active
+#cleos -u http://api-direct.eosasia.one push action dacincubator transfer '[ "minakokojima", "myeosgroupon", "5.0000 KBY", "" ]' -p minakokojima@active
 
 
 #eosowangfeng TPT
