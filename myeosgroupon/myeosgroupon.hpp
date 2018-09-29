@@ -36,8 +36,12 @@ public:
                     asset          quantity,
                     string         memo);  
 
+
     // @abi action    
     void claim();
+
+    // @abi action    
+    void claim2();
 
     // @abi action    
     void distribute();
@@ -104,6 +108,6 @@ extern "C"
             return;
         }
         if (code != receiver) return;                              
-        switch (action) {EOSIO_API(myeosgroupon, (init)(clean)(test)(claim)(distribute))}
+        switch (action) {EOSIO_API(myeosgroupon, (init)(clean)(test)(claim)(claim2)(distribute))}
     }
 }

@@ -49,23 +49,32 @@ struct account {
 };
 typedef eosio::multi_index<N(accounts), account> accounts;
 
-void myeosgroupon::claim() {    
+
+
+void myeosgroupon::claim() {  
     require_auth(_self);
 
     auto g = global.begin();
 
-    /*eosio_assert(now() >= g->claim_time + PERIOD, "The current group buy is running");
+    eosio_assert(now() >= g->claim_time + PERIOD, "The current group buy is running");
 
     action(
         permission_level{_self, N(active)},
         N(eosio.token), N(transfer),
-        make_tuple(_self, TARGET_CONTRACT, g->reserve, string("buy")))
-    .send();*/
+        make_tuple(_self, TARGET_CONTRACT, g->reserve, string("buy"))
+    ).send();
+}
+
+void myeosgroupon::claim2() {  
+    require_auth(_self);
+
+    auto g = global.begin();
+    eosio_assert(now() >= g->claim_time + PERIOD, "The current group buy is running");
 
     const auto& sym = eosio::symbol_type(KBY_SYMBOL).name();
     accounts supply_account(TARGET_CONTRACT, _self);
-    auto supply = supply_account.get(sym).balance;   
-  
+    auto supply = supply_account.get(sym).balance;
+
     global.modify(g, 0, [&](auto &g) {
         g.supply = supply;
     });
@@ -74,7 +83,7 @@ void myeosgroupon::claim() {
 void myeosgroupon::distribute() {
     require_auth(_self);
     auto g = global.begin();
-        
+                
     uint64_t cnt = 0;
     while (orders.begin() != orders.end()) {
         if (cnt == 4) return;
@@ -84,17 +93,21 @@ void myeosgroupon::distribute() {
         delta.amount *= itr->quantity.amount;
         delta.amount /= g->reserve.amount;
 
-        /*send_defer_action(
-            permission_level{_self, N(active)},
-            TARGET_CONTRACT, N(transfer),
-            make_tuple(_self, itr->account, delta, string("distribute token"))
-        );*/
+        
+   
         if (delta.amount > 0){
+
+            /*
             action(
                 permission_level{_self, N(active)},
                 TARGET_CONTRACT, N(transfer),
                 make_tuple(_self, itr->account, delta, string("distribute token"))
-            ).send();
+            ).send();*/
+            send_defer_action(
+                permission_level{_self, N(active)},
+                TARGET_CONTRACT, N(transfer),
+                make_tuple(_self, itr->account, delta, string("distribute token"))
+            );            
         }
 
         ++cnt; 

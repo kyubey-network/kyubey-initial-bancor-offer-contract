@@ -39,18 +39,17 @@ namespace eosio {
 
                   uint64_t primary_key()const { return balance.symbol.name(); }
             };
+            typedef eosio::multi_index<N(accounts), account> accounts;
 
-            struct currency_stats {
+            // @abi table stats i64
+            struct stat {
                   asset          supply;
                   asset          max_supply;
                   account_name   issuer;
 
                   uint64_t primary_key()const { return supply.symbol.name(); }
-            };
-
-
-            typedef eosio::multi_index<N(accounts), account> accounts;
-            typedef eosio::multi_index<N(stat), currency_stats> stats;
+            };            
+            typedef eosio::multi_index<N(stat), stat> stats;
 
             void sub_balance( account_name owner, asset value );
             void add_balance( account_name owner, asset value, account_name ram_payer );

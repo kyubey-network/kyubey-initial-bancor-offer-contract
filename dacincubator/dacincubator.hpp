@@ -73,7 +73,9 @@ public:
     };
 
     // @abi action    
-    void receipt(const rec& recepit);      
+    void receipt(const rec& recepit);  
+
+    void charge_fee(account_name from, asset& quantity);    
 
     uint64_t get_next_defer_id() {
         auto g = global.get(0);
