@@ -12,6 +12,7 @@ cleos -u http://api-direct.eosasia.one set contract myeosgroupon myeosgroupon -p
 
 # cleos -u http://api-direct.eosasia.one push action myeosgroupon init '[]' -p myeosgroupon@active
  
+ 
 #cleos -u http://api-direct.eosasia.one push action myeosgroupon claim '[ "" ]' -p myeosgroupon@active
 # cleos -u http://api-direct.eosasia.one push action myeosgroupon claim2 '[ "" ]' -p myeosgroupon@active
 
@@ -22,6 +23,8 @@ cleos -u http://api-direct.eosasia.one set contract myeosgroupon myeosgroupon -p
 
 #cleos -u https://api.eosnewyork.io:443 get table myeosgroupon myeosgroupon global
 
+#cleos -u https://api.eosnewyork.io:443 get table -l 65536 myeosgroupon myeosgroupon order
+#cleos -u http://api-direct.eosasia.one push action dacincubator transfer '[ "myeosgroupon", "eosotcbackup", "96.7708 KBY", ""]' -p myeosgroupon@active
 
 
 #cleos -u http://api-direct.eosasia.one get table dacincubator eosotcbackup accounts

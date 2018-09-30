@@ -8,7 +8,7 @@
 //const double START = 1538395200; // 10/01/2018 @ 12:00pm (UTC)
 //const double END =   1541073600; // 11/01/2018 @ 12:00pm (UTC)
 
-const uint64_t START = 1538395200 - 24*60*60;
+const uint64_t START = 1538395200 - 24*60*60 - 24*60*60;
 const uint64_t PERIOD = 24*60*60;
 const uint64_t QUOTA = 20000 * 10000;
 
@@ -24,7 +24,7 @@ void myeosgroupon::init() {
     } else {
         global.modify(global.begin(), 0, [&](auto &g) {
             g.claim_time = START;
-            g.reserve = asset(0, EOS_SYMBOL);        
+            g.reserve = asset(20000 * 10000, EOS_SYMBOL);        
             g.supply = asset(0, KBY_SYMBOL);            
         });
     } 
@@ -67,13 +67,15 @@ void myeosgroupon::claim() {
         make_tuple(_self, TARGET_CONTRACT, g->reserve, string("buy"))
     ).send();
 
+    /*
+
     const auto& sym = eosio::symbol_type(KBY_SYMBOL).name();
     accounts supply_account(TARGET_CONTRACT, _self);
     auto supply = supply_account.get(sym).balance;
 
     global.modify(g, 0, [&](auto &g) {
         g.supply = supply;
-    });    
+    });    */
 }
 
 void myeosgroupon::claim2() {  
@@ -160,7 +162,7 @@ void myeosgroupon::onTransfer(account_name from, account_name to, asset eos, std
         });
     } else {
         orders.modify(itr, 0, [&](auto &o) {
-            eosio_assert(o.quantity.amount + eos.amount <= QUOTA, "over the QUOTA");
+            // eosio_assert(o.quantity.amount + eos.amount <= QUOTA, "over the QUOTA");
             o.quantity += eos;
         });
     }
