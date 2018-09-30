@@ -4,10 +4,13 @@
 
 #include "myeosgroupon.hpp"
 
+//const double BASE_FEE_RATIO = 0.45; // 45%
+//const double START = 1538395200; // 10/01/2018 @ 12:00pm (UTC)
+//const double END =   1541073600; // 11/01/2018 @ 12:00pm (UTC)
 
-const uint64_t START = 1537920000 - 8 * 60 * 60 + 18 * 60 * 60;
-const uint64_t PERIOD = 6 * 60 * 60;
-const uint64_t QUOTA = 100;
+const uint64_t START = 1538395200 - 24*60*60;
+const uint64_t PERIOD = 24*60*60;
+const uint64_t QUOTA = 20000 * 10000;
 
 void myeosgroupon::init() {
     require_auth(_self); 
@@ -63,6 +66,14 @@ void myeosgroupon::claim() {
         N(eosio.token), N(transfer),
         make_tuple(_self, TARGET_CONTRACT, g->reserve, string("buy"))
     ).send();
+
+    const auto& sym = eosio::symbol_type(KBY_SYMBOL).name();
+    accounts supply_account(TARGET_CONTRACT, _self);
+    auto supply = supply_account.get(sym).balance;
+
+    global.modify(g, 0, [&](auto &g) {
+        g.supply = supply;
+    });    
 }
 
 void myeosgroupon::claim2() {  
@@ -137,10 +148,12 @@ void myeosgroupon::onTransfer(account_name from, account_name to, asset eos, std
     auto g = global.begin();
     eosio_assert(now() >= g->claim_time, "The current group buy is not start");
     eosio_assert(now() < g->claim_time + PERIOD, "The current group buy is closed");
+    
+    eosio_assert( (g->reserve + eos).amount <= QUOTA, "over the QUOTA");
 
     auto itr = orders.find(from);
     if (itr == orders.end()) {
-        eosio_assert(eos.amount <= QUOTA, "over the QUOTA");
+        //eosio_assert(eos.amount <= QUOTA, "over the QUOTA");
         orders.emplace(_self, [&](auto& o) {
             o.account = from;
             o.quantity = eos;

@@ -18,6 +18,7 @@
 
 #define EOS_SYMBOL S(4, EOS)
 #define KBY_SYMBOL S(4, KBY)
+#define PXL_SYMBOL S(4, PXL)
 
 typedef double real_type;
 

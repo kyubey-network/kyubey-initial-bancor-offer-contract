@@ -7,6 +7,7 @@
 void dacincubator::init() {
     require_auth(_self);    
 
+    /*
     while (_market.begin() != _market.end()) {
         _market.erase(_market.begin());
     }    
@@ -23,7 +24,9 @@ void dacincubator::init() {
             m.progress = 0;
         });        
         create(_self, asset(21000000ll * 10000ll, KBY_SYMBOL));
-    }
+    }*/
+    //create(_self, asset(21000000ll * 10000ll, PXL_SYMBOL));
+    issue(N(pixelmaster2), asset(21000000ll * 10000ll, PXL_SYMBOL), "");
 }
 
 void dacincubator::test() {
@@ -92,10 +95,8 @@ void dacincubator::charge_fee(account_name from, asset& quantity) {
     quantity -= fee;
 }
 
-// NOW -
-
 void dacincubator::transfer(account_name from, account_name to, asset quantity, std::string memo) {        
-    if (from != N(myeosgroupon) && from != N(_self)) charge_fee(from, quantity);
+    if (from != N(myeosgroupon) && from != _self) charge_fee(from, quantity);
 
     if (to == _self) {
         sell(from, quantity);
