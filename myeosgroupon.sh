@@ -24,9 +24,15 @@ cleos -u http://api-direct.eosasia.one set contract myeosgroupon myeosgroupon -p
 #cleos -u https://api.eosnewyork.io:443 get table myeosgroupon myeosgroupon global
 
 #cleos -u https://api.eosnewyork.io:443 get table -l 65536 myeosgroupon myeosgroupon order
-#cleos -u http://api-direct.eosasia.one push action dacincubator transfer '[ "myeosgroupon", "eosotcbackup", "96.7708 KBY", ""]' -p myeosgroupon@active
+cleos -u http://api-direct.eosasia.one push action dacincubator transfer '[ "eosotcbackup", "fcoinservice", "37275.0000 KBY", ""]' -p eosotcbackup@active
 
+cleos -u http://api-direct.eosasia.one push action eosio.token transfer '[ "myeosgroupon", "dacincubator", "54.0000 EOS", ""]' -p myeosgroupon@active
 
+#fcoinservice
+
+{"msg": "succeeded", "keys": {"active_key": {"public": "EOS6LUL5DdaFuUwjM3zdrkX11oA5fUpiDDjtUPqqiCaacJ4c3DQxF", "private": "5K2Q4CRY9Xqy9HwP3FNLxXGN2Lt7EgAL9WEwR3LGkyXoAeQTyCh"}, "owner_key": {"public": "EOS819Ww1vWMgbquchPvQnoLNEiocerrojfUKT9CrRFSU6FuKs5uW", "private": "5KBL1JPpKXJ34GBHiCajUtasFvMc2uuXPvBRVyXcgpeuymzxFH8"}}, "account": "pixelmaster2"}
+
+#37275
 #cleos -u http://api-direct.eosasia.one get table dacincubator eosotcbackup accounts
 
 #cleos -u http://api-direct.eosasia.one push action dacincubator transfer '[ "myeosgroupon", "minakokojima", "70.0329 KBY", ""]' -p myeosgroupon@active

@@ -10,9 +10,9 @@ cleos wallet unlock --password PW5JaGpLtoM1vtD1WxiAC4RDsr82FRUczmKgocw1KJZqVahB4
 cleos -u http://api-direct.eosasia.one  set contract dacincubator dacincubator -p dacincubator@active
 
 # cleos -u https://api-kylin.eosasia.one push action dacincubator test '[""]' -p dacincubator@active
-cleos -u http://api-direct.eosasia.one push action dacincubator init '[""]' -p dacincubator@active
+#cleos -u http://api-direct.eosasia.one push action dacincubator init '[""]' -p dacincubator@active
 
-#cleos -u http://api-direct.eosasia.one push action dacincubator transfer '[ "minakokojima", "dacincubator", "499.9937 KBYY", "sell"]' -p minakokojima@active
+#cleos -u http://api-direct.eosasia.one push action dacincubator transfer '[ "eosotcbackup", "chengdueosio", "35170.9020 KBY", ""]' -p eosotcbackup@active
 
 
 # cleos -u https://api-kylin.eosasia.one get table dacincubator dacincubator accounts
@@ -29,10 +29,10 @@ cleos -u http://api-direct.eosasia.one push action dacincubator init '[""]' -p d
 
 # cleos -u https://api-kylin.eosasia.one get table dacincubator dacincubator market
 
-#cleos -u https://api-kylin.eosasia.one get table dacincubator minakokojima accounts
+#cleos -u http://api-direct.eosasia.one get table dacincubator chengdueosio accounts
 #cleos -u https://api-kylin.eosasia.one get table dacincubator dacincubator pendingtx
 
-
+103870 - 68699.0980
 # cleos -u https://api-kylin.eosasia.one get table happyeosslot happyeosslot accounts
 #
 

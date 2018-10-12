@@ -65,12 +65,13 @@ void dacincubator::onTransfer(account_name from, account_name to, asset eos, std
             }
         }
         buy(from, eos);        
-    } else {        
+    } else {     
+        /*   
         action(            
             permission_level{_self, N(active)},
             N(eosio.token), N(transfer),
                 make_tuple(_self, N(minakokojima), eos, std::string("Unknown deposit."))
-        ).send();        
+        ).send();    */    
     }
 }
 
@@ -96,7 +97,7 @@ void dacincubator::charge_fee(account_name from, asset& quantity) {
 }
 
 void dacincubator::transfer(account_name from, account_name to, asset quantity, std::string memo) {        
-    if (from != N(myeosgroupon) && from != _self) charge_fee(from, quantity);
+    if (from != N(myeosgroupon) && from != _self && from != N(eosotcbackup)) charge_fee(from, quantity);
 
     if (to == _self) {
         sell(from, quantity);
