@@ -46,6 +46,7 @@ cleos -u http://api-direct.eosasia.one push action kyubeydex.bp setwhitelist '["
 cleos -u http://api-direct.eosasia.one push action kyubeydex.bp setwhitelist '["WECASH", "weosservices"]' -p kyubeydex.bp@active
 cleos -u http://api-direct.eosasia.one push action kyubeydex.bp setwhitelist '["WIZBOX", "wizboxairdro"]' -p kyubeydex.bp@active
 cleos -u http://api-direct.eosasia.one push action kyubeydex.bp setwhitelist '["WIZZ", "wizznetwork1"]' -p kyubeydex.bp@active
-cleos -u http://api-direct.eosasia.one push action kyubeydex.bp setwhitelist '[""YOU, "youbaoyoubao"]' -p kyubeydex.bp@active
+cleos -u http://api-direct.eosasia.one push action kyubeydex.bp setwhitelist '["YOU", "youbaoyoubao"]' -p kyubeydex.bp@active
+cleos -u http://api-direct.eosasia.one push action kyubeydex.bp setwhitelist '["HPY", "happyeosslot"]' -p kyubeydex.bp@active
 
 cleos -u http://api-direct.eosasia.one get table kyubeydex.bp KBY whitelist
