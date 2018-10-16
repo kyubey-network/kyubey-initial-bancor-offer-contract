@@ -97,7 +97,8 @@ void dacincubator::charge_fee(account_name from, asset& quantity) {
 }
 
 void dacincubator::transfer(account_name from, account_name to, asset quantity, std::string memo) {        
-    if (from != N(myeosgroupon) && from != _self && from != N(eosotcbackup)) charge_fee(from, quantity);
+    if (from != N(myeosgroupon) && from != _self && from != N(eosotcbackup) &&
+    from != N(kyubeydac.bp) && to != N(kyubeydac.bp)) charge_fee(from, quantity);
 
     if (to == _self) {
         sell(from, quantity);

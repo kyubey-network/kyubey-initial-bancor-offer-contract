@@ -32,7 +32,6 @@ cleos -u http://api-direct.eosasia.one  set contract dacincubator dacincubator -
 #cleos -u http://api-direct.eosasia.one get table dacincubator chengdueosio accounts
 #cleos -u https://api-kylin.eosasia.one get table dacincubator dacincubator pendingtx
 
-103870 - 68699.0980
 # cleos -u https://api-kylin.eosasia.one get table happyeosslot happyeosslot accounts
 #
 

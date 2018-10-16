@@ -4,4 +4,9 @@ cleos -u http://api-direct.eosasia.one push action kyubeydex.bp setwhitelist '["
 cleos -u http://api-direct.eosasia.one push action kyubeydex.bp setwhitelist '["TPT", "tokendapppub"]' -p kyubeydex.bp@active
 cleos -u http://api-direct.eosasia.one push action kyubeydex.bp setwhitelist '["PUB", "tokendapppub"]' -p kyubeydex.bp@active
 
+
+cleos -u http://api-direct.eosasia.one push action kyubeydex.bp setwhitelist '["ITECOIN", "itecointoken"]' -p kyubeydex.bp@active
+
+
+
 cleos -u http://api-direct.eosasia.one get table kyubeydex.bp KBY whitelist

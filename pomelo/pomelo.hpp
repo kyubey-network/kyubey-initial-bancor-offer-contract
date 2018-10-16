@@ -11,12 +11,33 @@
 using namespace eosio;
 using namespace std;
 
+static uint64_t my_string_to_symbol(const char* str) 
+{
+    uint32_t len = 0;
+    while (str[len]) 
+    {
+        ++len;
+    }
+    uint64_t result = 0;
+    for (uint32_t i = 0; i < len; ++i) {
+        // All characters must be upper case alaphabets
+        //eosio_assert(str[i] >= 'A' && str[i] <= 'Z', "...invalid character in symbol name");
+        result |= (uint64_t(str[i]) << (8 * (i + 1)));
+    }
+    return result >> 8;
+}
+
+
+
 class pomelo : public contract
 {
 public:
     pomelo(account_name self) :
         contract(self) {
     }
+
+    // @abi action
+    void clean();    
 
     // @abi action
     void cancelsell(account_name account, string symbol, uint64_t id);
@@ -40,7 +61,10 @@ public:
     void transfer(account_name from,
                   account_name to,
                   asset        quantity,
-                  string       memo);                 
+                  string       memo);    
+
+    void rmbuyorder(uint64_t id);
+    void rmsellorder(uint64_t id);
 
     // @abi table buyorder i64
     struct buyorder { 
@@ -52,7 +76,7 @@ public:
         time timestamp;
 
         uint64_t primary_key() const { return id; }
-        uint64_t get_price() const { return unit_price; }
+        uint64_t get_price() const { return -unit_price; }
         EOSLIB_SERIALIZE(buyorder, (id)(account)(bid)(ask)(unit_price)(timestamp))
     };
     typedef eosio::multi_index<N(buyorder), buyorder, 
@@ -98,14 +122,26 @@ public:
         account_name asker;
         asset bid;
         asset ask;
-        uint64_t unit_price;
+        double unit_price;
         time timestamp;
     };    
 
     // @abi action
     void matchreceipt(match_record t) {
         require_auth(_self);
-    }       
+    }
+
+    // @abi table userorder i64
+    struct userorder {
+        uint64_t id;
+        int64_t orderid;        
+        string symbol;
+        uint64_t primary_key() const { return id; }
+        uint128_t get_order() const { return ((uint128_t)::my_string_to_symbol(symbol.c_str()) << 64) | orderid; }        
+    };
+    typedef eosio::multi_index<N(userorder), userorder,
+        indexed_by<N(byorder), const_mem_fun<userorder, uint128_t, &userorder::get_order>>
+    > userorders;
 
 private:
     uint64_t my_string_to_symbol(uint8_t precision, const char* str);
@@ -142,7 +178,7 @@ void pomelo::apply(account_name contract, action_name act)
     if (contract != _self) return;
 
     switch (act) {
-        EOSIO_API(pomelo, (cancelbuy)(cancelsell)(setwhitelist)(rmwhitelist))
+        EOSIO_API(pomelo, (clean)(cancelbuy)(cancelsell)(setwhitelist)(rmwhitelist))
     };
 }
 
