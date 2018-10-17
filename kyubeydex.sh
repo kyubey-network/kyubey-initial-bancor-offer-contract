@@ -1,10 +1,11 @@
 cleos wallet unlock --password PW5JaGpLtoM1vtD1WxiAC4RDsr82FRUczmKgocw1KJZqVahB4LZ1u
 #
-/usr/local/eosio/bin/eosiocpp -g pomelo/pomelo.abi pomelo/pomelo.cpp
+#/usr/local/eosio/bin/eosiocpp -g pomelo/pomelo.abi pomelo/pomelo.cpp
 /usr/local/eosio/bin/eosiocpp -o pomelo/pomelo.wast pomelo/pomelo.cpp
 
 cleos -u http://api.eosbeijing.one set contract kyubeydex.bp pomelo -p kyubeydex.bp@active
-#cleos -u http://api.eosbeijing.one push action kyubeydex.bp clean '' -p kyubeydex.bp@active
+cleos -u http://api.eosbeijing.one push action kyubeydex.bp clean '' -p kyubeydex.bp@active
+
 
 
 #cleos -u http://api.eosbeijing.one push action eosio.token transfer '[ "minakokojima", "kyubeydex.bp", "0.5000 EOS", "1.0000 ITECOIN" ]' -p minakokojima@active
@@ -41,12 +42,12 @@ cleos -u http://api.eosbeijing.one set contract kyubeydex.bp pomelo -p kyubeydex
 
 #cleos -u http://api-direct.eosasia.one get table dacincubator dacincubator accounts
 
-#cleos -u http://api-direct.eosasia.one get table kyubeydex.bp kyubeydex.bp whitelist
+#cleos -u http://api-direct.eosasia.one get table kyubeydex.bp HPY whitelist
 
 #cleos -u http://api-direct.eosasia.one get table kyubeydex.bp PXL buyorder
 
 #cleos -u http://api.eosbeijing.one get table kyubeydex.bp ITECOIN sellorder
-#cleos -u http://api.eosbeijing.one get table kyubeydex.bp ITECOIN buyorder
+#cleos -u http://api.eosbeijing.one get table kyubeydex.bp HPY buyorder
 
 #cleos -u http://api-direct.eosasia.one get table crazytown.bp "........cdeq" buyorder
 
