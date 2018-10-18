@@ -1,10 +1,10 @@
 cleos wallet unlock --password PW5JaGpLtoM1vtD1WxiAC4RDsr82FRUczmKgocw1KJZqVahB4LZ1u
 #
-#/usr/local/eosio/bin/eosiocpp -g pomelo/pomelo.abi pomelo/pomelo.cpp
+/usr/local/eosio/bin/eosiocpp -g pomelo/pomelo.abi pomelo/pomelo.cpp
 /usr/local/eosio/bin/eosiocpp -o pomelo/pomelo.wast pomelo/pomelo.cpp
 
 cleos -u http://api.eosbeijing.one set contract kyubeydex.bp pomelo -p kyubeydex.bp@active
-cleos -u http://api.eosbeijing.one push action kyubeydex.bp clean '' -p kyubeydex.bp@active
+#cleos -u http://api.eosbeijing.one push action kyubeydex.bp clean '' -p kyubeydex.bp@active
 
 
 
@@ -21,7 +21,9 @@ cleos -u http://api.eosbeijing.one push action kyubeydex.bp clean '' -p kyubeyde
 #cleos -u http://api-direct.eosasia.one push action kyubeydex.bp clean '' -p kyubeydex.bp@active
 #cleos -u http://api-direct.eosasia.one push action crazytown.bp rmwhitelist '["PXL"]' -p crazytown.bp@active
 
-#cleos -u http://api-direct.eosasia.one push action eosio.token transfer '[ "minakokojima", "crazytown.bp", "0.0010 EOS", "0.0010 PXL" ]' -p minakokojima@active
+#
+
+#cleos -u http://api-direct.eosasia.one push action eosio.token transfer '[ "crazytown.bp", "fuyugen12345", "150.0000 EOS", "来我们开发者 tg 群" ]' -p crazytown.bp@active
 
 #cleos -u http://api-direct.eosasia.one push action dacincubator transfer '[ "eosotcbackup", "crazytown.bp", "0.0010 PXL", "0.0010 EOS" ]' -p eosotcbackup@active
 

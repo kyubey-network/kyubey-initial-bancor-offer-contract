@@ -3,10 +3,11 @@
 void pomelo::clean() {
     require_auth(_self);
 
-    /*while (buy_table.begin() != buy_table.end()) {
+/*
+    while (buy_table.begin() != buy_table.end()) {
         buy_table.erase(buy_table.begin());
     }*/
-
+/*
     auto t = buyorders(_self, my_string_to_symbol(4, "ITECOIN"));
     while (t.begin() != t.end()) {
         t.erase(t.find(t.begin()->id));
@@ -14,7 +15,7 @@ void pomelo::clean() {
     auto t2 = sellorders(_self, my_string_to_symbol(4, "ITECOIN"));
     while (t2.begin() != t2.end()) {
         t2.erase(t2.find(t2.begin()->id));
-    }    
+    }  */  
 }
 
 static string symbol_to_string( uint64_t symbol ) {
@@ -124,15 +125,6 @@ void pomelo::publish_buyorder_if_needed(account_name account, asset bid, asset a
             t.unit_price = bid.amount * 10000 / ask.amount;
             t.timestamp = current_time();
         });
-
-        /*
-        auto user_table = userorders(_self, account);
-
-        user_table.emplace(_self, [&](auto& t) {
-            t.id = user_table.available_primary_key();
-            t.orderid = id;
-            t.symbol = symbol_to_string(ask.symbol);
-        });*/
     }
 }
 
@@ -159,16 +151,6 @@ void pomelo::publish_sellorder_if_needed(account_name account, asset bid, asset 
             t.unit_price = ask.amount * 10000 / bid.amount;
             t.timestamp = current_time();
         });
-
-        /*
-        auto user_table = userorders(_self, account);
-
-        user_table.emplace(_self, [&](auto& t) {
-            t.id = user_table.available_primary_key();
-            t.orderid = -id;
-            t.symbol = symbol_to_string(bid.symbol);
-        }); 
-        */ 
     }
 }
 
@@ -232,12 +214,12 @@ void pomelo::buy(account_name account, asset bid, asset ask)
         m.asker = itr->account;
         m.bid = asset(sold_eos, EOS);
         m.ask = asset(sold_token, ask.symbol);
-        m.unit_price = double(itr->unit_price) / 10000;
+        m.unit_price = itr->unit_price;
         m.timestamp = now();
 
         action(
             permission_level{ _self, N(active) },
-            _self, N(matchreceipt), m
+            _self, N(buymatch), m
         ).send();  
             
         // Transfer EOS to seller  
@@ -265,11 +247,6 @@ void pomelo::buy(account_name account, asset bid, asset ask)
         // Erase the sell order from sell order table if the order finished.
         if (itr->ask.amount == 0 || itr->bid.amount == 0)
         {
-            auto seller_order = userorders(_self, itr->account).get_index<N(byorder)>();
-            auto s = seller_order.find( ((uint128_t) ask.symbol.name() << 64) | (-itr->id) );
-            if (s != seller_order.end()){
-                seller_order.erase(s);
-            }
             itr = unit_price_index.erase(itr);
             if (bid.amount == 0 || ask.amount == 0) {
                 return;
@@ -318,6 +295,8 @@ void pomelo::sell(account_name account, asset bid, asset ask)
 
     // Visit sell orders table
     //upper_bound(order_unit_price - 1)
+
+    // 越贵越好？
     
     for (auto itr = unit_price_index.begin(); itr != unit_price_index.end(); )
     {    
@@ -326,7 +305,7 @@ void pomelo::sell(account_name account, asset bid, asset ask)
             break;
         }
 
-        uint64_t sold_token = bid.amount <= itr->ask.amount ? bid.amount : itr->bid.amount;
+        uint64_t sold_token = bid.amount <= itr->ask.amount ? bid.amount : itr->ask.amount;
         uint64_t sold_eos = sold_token * itr->unit_price / 10000;
 
         // Modify sell order record
@@ -343,14 +322,14 @@ void pomelo::sell(account_name account, asset bid, asset ask)
         m.id = itr->id;
         m.bidder = itr->account;
         m.asker = account;
-        m.bid = asset(sold_eos, EOS);
-        m.ask = asset(sold_token, bid.symbol);
-        m.unit_price = double(itr->unit_price) / 10000;
+        m.bid = asset(sold_token, bid.symbol);
+        m.ask = asset(sold_eos, EOS);
+        m.unit_price = itr->unit_price;
         m.timestamp = now();
 
         action(
             permission_level{ _self, N(active) },
-            _self, N(matchreceipt), m
+            _self, N(sellmatch), m
         ).send();  
             
         // Transfer EOS to seller
@@ -378,12 +357,6 @@ void pomelo::sell(account_name account, asset bid, asset ask)
         // Erase the buy order from buy order table if the order finished.
         if (itr->ask.amount == 0 || itr->bid.amount == 0)
         {
-            auto buyer_order = userorders(_self, itr->account).get_index<N(byorder)>();
-            auto s = buyer_order.find( ((uint128_t) bid.symbol.name() << 64) | (itr->id) );
-            if (s != buyer_order.end()){           
-                buyer_order.erase(s);
-            }
-
             itr = unit_price_index.erase(itr);
             if (bid.amount == 0 || ask.amount == 0) {
                 return;
@@ -418,12 +391,6 @@ void pomelo::cancelbuy(account_name account, string symbol, uint64_t id) {
     ).send();    
 
     buy_table.erase(itr);
-
-    /*auto buyer_order = userorders(_self, itr->account).get_index<N(byorder)>();
-    auto s = buyer_order.find( ((uint128_t) itr->ask.symbol.name() << 64) | (itr->id) );
-    if (s != buyer_order.end()){           
-        buyer_order.erase(s);
-    }*/ 
 }
 
 void pomelo::rmsellorder(uint64_t id) {
@@ -446,12 +413,6 @@ void pomelo::cancelsell(account_name account, string symbol, uint64_t id) {
     ).send(); 
     
     sell_table.erase(itr);
-    /*
-    auto seller_order = userorders(_self, itr->account).get_index<N(byorder)>();
-    auto s = seller_order.find( ((uint128_t) itr->bid.symbol.name() << 64) | (-itr->id) );
-    if (s != seller_order.end()){           
-        seller_order.erase(s);
-    }*/
 }
 
 
@@ -465,7 +426,7 @@ void pomelo::onTransfer(account_name from, account_name to, asset bid, std::stri
     eosio_assert(bid.amount > 0, "must bet a positive amount");
 
     auto splited_asset = split(memo, ' ');
-    eosio_assert(splited_asset.size() == 2, "Memo should be a valid asset. Example: 1.2345 KBY");
+    eosio_assert(splited_asset.size() == 2, "Memo should be a valid asset. Example: 1.2345 KBY..");
     asset ask;
     ask.amount = string_to_amount(splited_asset[0]);
     ask.symbol = string_to_symbol(4, splited_asset[1].c_str());

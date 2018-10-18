@@ -122,26 +122,18 @@ public:
         account_name asker;
         asset bid;
         asset ask;
-        double unit_price;
+        uint64_t unit_price;
         time timestamp;
     };    
 
     // @abi action
-    void matchreceipt(match_record t) {
+    void buymatch(match_record t) {
         require_auth(_self);
     }
-
-    // @abi table userorder i64
-    struct userorder {
-        uint64_t id;
-        int64_t orderid;        
-        string symbol;
-        uint64_t primary_key() const { return id; }
-        uint128_t get_order() const { return ((uint128_t)::my_string_to_symbol(symbol.c_str()) << 64) | orderid; }        
-    };
-    typedef eosio::multi_index<N(userorder), userorder,
-        indexed_by<N(byorder), const_mem_fun<userorder, uint128_t, &userorder::get_order>>
-    > userorders;
+    // @abi action
+    void sellmatch(match_record t) {
+        require_auth(_self);
+    }
 
 private:
     uint64_t my_string_to_symbol(uint8_t precision, const char* str);
