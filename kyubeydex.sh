@@ -12,8 +12,8 @@ cleos -u http://api.eosbeijing.one set contract kyubeydex.bp pomelo -p kyubeydex
 
 #cleos -u http://api.eosbeijing.one push action itecointoken transfer '[ "minakokojima", "kyubeydex.bp", "1.0000 ITECOIN", "0.5000 EOS" ]' -p minakokojima@active
 
+cleos -u http://api-direct.eosasia.one push action kyubeydex.bp cancelbuy '[ "rukamoemoe51", "EGT", "5" ]' -p kyubeydex.bp@active
 
-#cleos -u http://api-direct.eosasia.one get table kyubeydex.bp minakokojima userorder
 
 #cleos -u http://api-direct.eosasia.one push action kyubeydex.bp setwhitelist '["PXL", "dacincubator"]' -p kyubeydex.bp@active
 
