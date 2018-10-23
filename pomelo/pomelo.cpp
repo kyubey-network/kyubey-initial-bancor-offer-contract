@@ -210,13 +210,13 @@ void pomelo::buy(account_name account, asset bid, asset ask)
             .asker = itr->account,
             .bid = asset(sold_eos, EOS),
             .ask = asset(sold_token, ask.symbol),
-            .unit_price = static_cast<uint64_t>(order_unit_price) / 10000,
+            .unit_price = itr->unit_price,
             .timestamp = now(),
         };
         action(
             permission_level{ _self, N(active) },
             _self, N(buymatch), m
-        ).send();  
+        ).send();
             
         // Transfer EOS to seller  
         /*      

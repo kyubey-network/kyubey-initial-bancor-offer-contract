@@ -2,7 +2,6 @@
 #include <eosiolib/asset.hpp>
 #include <eosiolib/multi_index.hpp>
 #include <eosiolib/singleton.hpp>
-// #include <eosiolib/currency.hpp>
 #include <math.h>
 #include <string>
 #include <vector>
