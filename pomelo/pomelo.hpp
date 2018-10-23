@@ -1,12 +1,17 @@
-#include <eosiolib/singleton.hpp>
-#include <eosiolib/currency.hpp>
+#include <eosiolib/eosio.hpp>
 #include <eosiolib/asset.hpp>
+#include <eosiolib/multi_index.hpp>
+#include <eosiolib/singleton.hpp>
+// #include <eosiolib/currency.hpp>
 #include <math.h>
 #include <string>
 #include <vector>
 
 #define EOS S(4, EOS)
 #define TOKEN_CONTRACT N(eosio.token)
+
+//typedef capi_name account_name ;
+//typedef capi_name action_name ;
 
 using namespace eosio;
 using namespace std;
@@ -29,7 +34,7 @@ static uint64_t my_string_to_symbol(const char* str)
 
 
 
-class pomelo : public contract
+class pomelo : public eosio::contract
 {
 public:
     pomelo(account_name self) :
@@ -50,6 +55,9 @@ public:
 
     // @abi action
     void rmwhitelist(string symbol);
+
+    // @abi action
+    void login(string token) {}
 
     void apply(account_name contract, action_name act);   
 
@@ -150,11 +158,22 @@ private:
     void sell(account_name account, asset bid, asset ask);    
 };
 
+        struct st_transfer
+        {
+            account_name from;
+            account_name to;
+            asset        quantity;
+            string       memo;
+
+            EOSLIB_SERIALIZE( st_transfer, (from)(to)(quantity)(memo) )
+         };
+
+
 void pomelo::apply(account_name contract, action_name act) 
 {
     auto &thiscontract = *this;
     if (act == N(transfer)) {
-        auto transfer = unpack_action_data<currency::transfer>();
+        auto transfer = unpack_action_data<st_transfer>();
         if (transfer.quantity.symbol == EOS) 
         {
             eosio_assert(contract == TOKEN_CONTRACT, "Transfer EOS must go through eosio.token");
@@ -170,7 +189,7 @@ void pomelo::apply(account_name contract, action_name act)
     if (contract != _self) return;
 
     switch (act) {
-        EOSIO_API(pomelo, (clean)(cancelbuy)(cancelsell)(setwhitelist)(rmwhitelist))
+        EOSIO_API(pomelo, (clean)(cancelbuy)(cancelsell)(setwhitelist)(rmwhitelist)(login))
     };
 }
 
