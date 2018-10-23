@@ -7,6 +7,7 @@ cleos -u http://api.eosbeijing.one set contract kyubeydex.bp pomelo -p kyubeydex
 #cleos -u http://api.eosbeijing.one push action kyubeydex.bp clean '' -p kyubeydex.bp@active
 
 
+
 #cleos -u http://api.eosbeijing.one push action eosio.token transfer '[ "minakokojima", "kyubeydex.bp", "0.5000 EOS", "1.0000 ITECOIN" ]' -p minakokojima@active
 
 
@@ -20,7 +21,9 @@ cleos -u http://api-direct.eosasia.one push action kyubeydex.bp cancelbuy '[ "ru
 #cleos -u http://api-direct.eosasia.one push action kyubeydex.bp clean '' -p kyubeydex.bp@active
 #cleos -u http://api-direct.eosasia.one push action crazytown.bp rmwhitelist '["PXL"]' -p crazytown.bp@active
 
-#cleos -u http://api-direct.eosasia.one push action eosio.token transfer '[ "minakokojima", "crazytown.bp", "0.0010 EOS", "0.0010 PXL" ]' -p minakokojima@active
+#
+
+#cleos -u http://api-direct.eosasia.one push action eosio.token transfer '[ "crazytown.bp", "fuyugen12345", "150.0000 EOS", "来我们开发者 tg 群" ]' -p crazytown.bp@active
 
 #cleos -u http://api-direct.eosasia.one push action dacincubator transfer '[ "eosotcbackup", "crazytown.bp", "0.0010 PXL", "0.0010 EOS" ]' -p eosotcbackup@active
 
@@ -41,12 +44,12 @@ cleos -u http://api-direct.eosasia.one push action kyubeydex.bp cancelbuy '[ "ru
 
 #cleos -u http://api-direct.eosasia.one get table dacincubator dacincubator accounts
 
-#cleos -u http://api-direct.eosasia.one get table kyubeydex.bp kyubeydex.bp whitelist
+#cleos -u http://api-direct.eosasia.one get table kyubeydex.bp HPY whitelist
 
 #cleos -u http://api-direct.eosasia.one get table kyubeydex.bp PXL buyorder
 
 #cleos -u http://api.eosbeijing.one get table kyubeydex.bp ITECOIN sellorder
-#cleos -u http://api.eosbeijing.one get table kyubeydex.bp ITECOIN buyorder
+#cleos -u http://api.eosbeijing.one get table kyubeydex.bp HPY buyorder
 
 #cleos -u http://api-direct.eosasia.one get table crazytown.bp "........cdeq" buyorder
 
