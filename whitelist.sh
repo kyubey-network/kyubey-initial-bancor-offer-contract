@@ -9,6 +9,10 @@ cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["PXL"
 cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["KBY", "dacincubator"]' -p kyubeydex.bp@active
 cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["TPT", "tokendapppub"]' -p kyubeydex.bp@active
 cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["PUB", "tokendapppub"]' -p kyubeydex.bp@active
+<<<<<<< HEAD
+=======
+cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["CMU", "dacincubator"]' -p kyubeydex.bp@active
+>>>>>>> 6d5c879e91a41aabd6802e6d349c417fc05681ca
 
 cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["ADD", "eosadddddddd"]' -p kyubeydex.bp@active
 cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["ATD", "eosatidiumio"]' -p kyubeydex.bp@active

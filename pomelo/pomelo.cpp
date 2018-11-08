@@ -191,18 +191,30 @@ void pomelo::publish_sellorder_if_needed(account_name account, asset bid, asset 
 
 void pomelo::buy(account_name account, asset bid, asset ask) 
 {
-    // Validate bid symbol
-    eosio_assert(bid.symbol == EOS, "Bid must be EOS");
+    
+    eosio_assert(bid.symbol == EOS, "Bid must be EOS");                                    // Validate bid symbol
+    eosio_assert(ask.symbol != EOS, "Ask must be non-EOS...");                             // Validate ask symbol
+    eosio_assert(is_valid_unit_price(bid.amount, ask.amount), "Bid mod ask must be 0!!!"); // Validate unit price is integer
 
-    // Validate ask symbol
-    eosio_assert(ask.symbol != EOS, "Ask must be non-EOS...");
+    uint64_t order_unit_price = bid.amount * 10000 / ask.amount; // Calculate unit price  
 
-    // Validate unit price is integer
-    eosio_assert(is_valid_unit_price(bid.amount, ask.amount), "Bid mod ask must be 0!!!");
+<<<<<<< HEAD
+=======
+    const buyorder receipt{
+        .id = buyorders(_self, ask.symbol.name()).available_primary_key(),
+        .account = account,
+        .bid = bid,
+        .ask = ask,
+        .unit_price = order_unit_price,
+        .timestamp = now(),
+    };
 
-    // Calculate unit price
-    auto order_unit_price = bid.amount * 10000 / ask.amount;  
-
+    action(
+        permission_level{ _self, N(active) },
+        _self, N(buyreceipt), receipt
+    ).send();    
+            
+>>>>>>> 6d5c879e91a41aabd6802e6d349c417fc05681ca
     // Retrive the sell table for current token
     auto sell_table = sellorders(_self, ask.symbol.name());
 
@@ -227,19 +239,19 @@ void pomelo::buy(account_name account, asset bid, asset ask)
         // Retrive issue contract of this token
         auto token_contract = get_contract_name_by_symbol(ask.symbol);
 
-        match_record m;
-        m.id = itr->id;
-        m.bidder = account;        
-        m.asker = itr->account;
-        m.bid = asset(sold_eos, EOS);
-        m.ask = asset(sold_token, ask.symbol);
-        m.unit_price = itr->unit_price;
-        m.timestamp = now();
-
+        match_record m{
+            .id = itr->id,
+            .bidder = account,    
+            .asker = itr->account,
+            .bid = asset(sold_eos, EOS),
+            .ask = asset(sold_token, ask.symbol),
+            .unit_price = itr->unit_price,
+            .timestamp = now(),
+        };
         action(
             permission_level{ _self, N(active) },
             _self, N(buymatch), m
-        ).send();  
+        ).send();
             
         // Transfer EOS to seller  
              
