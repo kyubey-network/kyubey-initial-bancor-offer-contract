@@ -7,6 +7,10 @@
 #include "utils.hpp"
 
 #define TOKEN_CONTRACT N(eosio.token)
+#define CTN_SYMBOL S(4, CTN)
+#define CMU_SYMBOL S(4, CMU)
+
+
 
 using namespace eosio;
 using namespace std;

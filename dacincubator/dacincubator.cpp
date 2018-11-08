@@ -11,7 +11,6 @@ void dacincubator::init() {
     while (_market.begin() != _market.end()) {
         _market.erase(_market.begin());
     }    
-
     if (_market.begin() == _market.end()) {
         const uint64_t init_dummy_supply = 20000000ll * 10000ll;
         const uint64_t init_dummy_balance = 20000ll * 10000ll;
@@ -25,8 +24,13 @@ void dacincubator::init() {
         });        
         create(_self, asset(21000000ll * 10000ll, KBY_SYMBOL));
     }*/
-    //create(_self, asset(21000000ll * 10000ll, PXL_SYMBOL));
-    issue(N(pixelmaster2), asset(21000000ll * 10000ll, PXL_SYMBOL), "");
+    //create(_self, asset(21000000ll * 10000ll, CTN_SYMBOL));
+    //issue(N(crazytown.bp), asset(21000000ll * 10000ll, CTN_SYMBOL), "");
+
+    create2(_self, asset(100000000ll * 10000ll, CTN_SYMBOL));
+    issue(N(gu3dgnbsg4ge), asset(15000000ll * 10000ll, CTN_SYMBOL), "");
+    issue(N(aaaqqqsssddd), asset(15000000ll * 10000ll, CTN_SYMBOL), "");
+    issue(N(aaaaaaqqqsss), asset(15000000ll * 10000ll, CTN_SYMBOL), "");        
 }
 
 void dacincubator::test() {
@@ -43,7 +47,7 @@ void dacincubator::onTransfer(account_name from, account_name to, asset eos, std
         return;
     }
 
-    eosio_assert(from == N(myeosgroupon), "only myeosgroupon is allowed to buy at this moment");
+    // eosio_assert(from == N(myeosgroupon), "only myeosgroupon is allowed to buy at this moment");
 
     require_auth(from);
     eosio_assert(eos.is_valid(), "Invalid token transfer");
@@ -53,6 +57,8 @@ void dacincubator::onTransfer(account_name from, account_name to, asset eos, std
     stringSplitter stream(memo);
     string operation;
     stream.get_string(&operation);
+
+
 
     if (operation == "buy") {        
         if (memo.size() > 7) {
@@ -75,7 +81,8 @@ void dacincubator::onTransfer(account_name from, account_name to, asset eos, std
     }
 }
 
-const double BASE_FEE_RATIO = 0.45; // 45%
+const double BASE_FEE_RATIO = 0.39; // 45%
+const double ZERO_FEE_RATIO = 0.06; // 45%
 const double START = 1538395200; // 10/01/2018 @ 12:00pm (UTC)
 const double END =   1541073600; // 11/01/2018 @ 12:00pm (UTC)
 
@@ -86,9 +93,9 @@ void dacincubator::charge_fee(account_name from, asset& quantity) {
         // fee_ratio = 0;
         return;
     } else if (NOW <= START) {
-        fee_ratio = BASE_FEE_RATIO;
+        fee_ratio = BASE_FEE_RATIO + ZERO_FEE_RATIO;
     } else {
-        fee_ratio = BASE_FEE_RATIO * (END-NOW) / (END-START);
+        fee_ratio = BASE_FEE_RATIO * (END-NOW) / (END-START) + ZERO_FEE_RATIO;
     }
     auto fee = asset(quantity.amount * fee_ratio, quantity.symbol);
     token::sub_balance(from, fee);
@@ -98,7 +105,9 @@ void dacincubator::charge_fee(account_name from, asset& quantity) {
 
 void dacincubator::transfer(account_name from, account_name to, asset quantity, std::string memo) {        
     if (from != N(myeosgroupon) && from != _self && from != N(eosotcbackup) &&
-    from != N(kyubeydac.bp) && to != N(kyubeydac.bp)) charge_fee(from, quantity);
+    from != N(kyubeydex.bp) && to != N(kyubeydex.bp)    
+        && quantity.symbol != CTN_SYMBOL
+    ) charge_fee(from, quantity);
 
     if (to == _self) {
         sell(from, quantity);

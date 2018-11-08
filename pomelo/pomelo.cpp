@@ -2,7 +2,6 @@
 
 void pomelo::clean() {
     require_auth(_self);
-
 /*
     while (buy_table.begin() != buy_table.end()) {
         buy_table.erase(buy_table.begin());
@@ -16,6 +15,29 @@ void pomelo::clean() {
     while (t2.begin() != t2.end()) {
         t2.erase(t2.find(t2.begin()->id));
     }  */  
+
+    auto t  = buyorders(_self, my_string_to_symbol(4, "HPY"));
+    while (t.begin() != t.end()) {    
+        auto itr = t.begin();        
+        action(
+            permission_level{_self, N(active)},
+            N(eosio.token), N(transfer),
+            make_tuple(_self, itr->account, itr->bid,
+                std::string("trade cancel successed"))
+        ).send();   
+        t.erase(itr);
+    }
+    auto t2  = sellorders(_self, my_string_to_symbol(4, "HPY"));
+    while (t2.begin() != t2.end()) {    
+        auto itr = t2.begin();        
+        action(
+            permission_level{_self, N(active)},
+            get_contract_name_by_symbol(itr->bid.symbol), N(transfer),
+            make_tuple(_self, itr->account, itr->bid,
+                std::string("trade cancel successed"))
+        ).send();    
+        t2.erase(itr);
+    }  
 }
 
 static string symbol_to_string( uint64_t symbol ) {
@@ -92,7 +114,9 @@ vector<string> pomelo::split(string src, char c)
 
 account_name pomelo::get_contract_name_by_symbol(string symbol)
 {
-    return get_contract_name_by_symbol(my_string_to_symbol(4, symbol.c_str()));
+//    return get_contract_name_by_symbol(my_string_to_symbol(4, symbol.c_str()));
+    auto whitelist = whitelist_index(_self, my_string_to_symbol(4, symbol.c_str()));
+    return whitelist.get().contract;
 }
 
 account_name pomelo::get_contract_name_by_symbol(symbol_type symbol) {
@@ -124,7 +148,14 @@ void pomelo::publish_buyorder_if_needed(account_name account, asset bid, asset a
             t.bid = bid;
             t.unit_price = bid.amount * 10000 / ask.amount;
             t.timestamp = current_time();
+
+            action(
+                permission_level{ _self, N(active) },
+                _self, N(buyreceipt), t
+            ).send();      
         });
+
+     
     }
 }
 
@@ -150,6 +181,10 @@ void pomelo::publish_sellorder_if_needed(account_name account, asset bid, asset 
             t.bid = bid;
             t.unit_price = ask.amount * 10000 / bid.amount;
             t.timestamp = current_time();
+            action(
+                permission_level{ _self, N(active) },
+                _self, N(sellreceipt), t
+           ).send();      
         });
     }
 }
@@ -168,29 +203,13 @@ void pomelo::buy(account_name account, asset bid, asset ask)
     // Calculate unit price
     auto order_unit_price = bid.amount * 10000 / ask.amount;  
 
-    buyorder receipt;
-    receipt.id = buyorders(_self, ask.symbol.name()).available_primary_key();
-    receipt.account = account;
-    receipt.bid = bid;
-    receipt.ask = ask;
-    receipt.unit_price = order_unit_price;
-    receipt.timestamp = now();
-
-    action(
-        permission_level{ _self, N(active) },
-        _self, N(buyreceipt), receipt
-    ).send();    
-         
     // Retrive the sell table for current token
     auto sell_table = sellorders(_self, ask.symbol.name());
-
 
     // Get unit price index
     auto unit_price_index = sell_table.get_index<N(byprice)>();    
     
     // Visit sell orders table
-    //for (auto itr = unit_price_index.lower_bound(order_unit_price); itr != unit_price_index.end(); ++itr)
-    //{
     for (auto itr = unit_price_index.begin(); itr != unit_price_index.end();)
     {
         if (itr->unit_price > order_unit_price) {
@@ -223,22 +242,22 @@ void pomelo::buy(account_name account, asset bid, asset ask)
         ).send();  
             
         // Transfer EOS to seller  
-        /*      
+             
         action(
             permission_level{ _self, N(active) },
             TOKEN_CONTRACT, N(transfer),
             make_tuple(_self, itr->account, asset(sold_eos, EOS), string("transfer")))
         .send();
-        */
+    
 
         // Transfer Token to buyer       
-        /* 
+    
         action(
             permission_level{ _self, N(active) },
             token_contract, N(transfer),
             make_tuple(_self, account, asset(sold_token, ask.symbol), string("transfer")))
         .send();
-        */
+        
         
         bid.amount -= sold_eos;
         ask.amount -= sold_token;
@@ -281,23 +300,7 @@ void pomelo::sell(account_name account, asset bid, asset ask)
     // Get unit price index
     auto unit_price_index = buy_table.get_index<N(byprice)>();
     
-    sellorder recepit;
-    recepit.id = sellorders(_self, bid.symbol.name()).available_primary_key();
-    recepit.account = account;
-    recepit.bid = bid;
-    recepit.ask = ask;
-    recepit.unit_price = order_unit_price;
-    recepit.timestamp = now();
-    action(
-        permission_level{ _self, N(active) },
-        _self, N(sellreceipt), recepit
-    ).send();  
-
-    // Visit sell orders table
-    //upper_bound(order_unit_price - 1)
-
-    // 越贵越好？
-    
+    // Visit sell orders table    
     for (auto itr = unit_price_index.begin(); itr != unit_price_index.end(); )
     {    
 
@@ -333,22 +336,22 @@ void pomelo::sell(account_name account, asset bid, asset ask)
         ).send();  
             
         // Transfer EOS to seller
-        /*
+        
         action(
             permission_level{ _self, N(active) },
             TOKEN_CONTRACT, N(transfer),
             make_tuple(_self, account, asset(sold_token * order_unit_price / 10000, EOS), string("transfer")))
         .send();
-        */
+    
             
         // Transfer Token to buyer
-        /*
+        
         action(
             permission_level{ _self, N(active) },
             token_contract, N(transfer),
             make_tuple(_self, itr->account, asset(sold_token, bid.symbol), string("transfer")))
         .send();
-        */
+        
             
 
         bid.amount -= sold_token;
@@ -401,16 +404,16 @@ void pomelo::cancelsell(account_name account, string symbol, uint64_t id) {
     
     auto sell_table = sellorders(_self, my_string_to_symbol(4, symbol.c_str()));  
     auto itr = sell_table.find(id);
-
+    
     eosio_assert(itr->account == account, "Account does not match");
     eosio_assert(itr->id == id, "Trade id is not found");
 
     action(
         permission_level{_self, N(active)},
-        N(eosio.token), N(transfer),
+        get_contract_name_by_symbol(symbol), N(transfer),
         make_tuple(_self, itr->account, itr->bid,
             std::string("trade cancel successed"))
-    ).send(); 
+    ).send();
     
     sell_table.erase(itr);
 }

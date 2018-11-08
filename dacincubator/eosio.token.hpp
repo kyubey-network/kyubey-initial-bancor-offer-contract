@@ -22,6 +22,8 @@ namespace eosio {
             token( account_name self ):contract(self){}
             void create( account_name issuer,
                         asset        maximum_supply);
+                               void create2( account_name issuer,
+                        asset        maximum_supply);
             void issue( account_name to, asset quantity, string memo );
             void transfer( account_name from,
                               account_name to,
@@ -76,6 +78,26 @@ namespace eosio {
             const auto& ac = accountstable.get( sym );
             return ac.balance;
       }
+
+      void token::create2( account_name issuer,
+                        asset        maximum_supply )
+      {
+            require_auth( _self );
+
+            auto sym = maximum_supply.symbol;
+            eosio_assert( sym.is_valid(), "invalid symbol name" );
+            eosio_assert( maximum_supply.is_valid(), "invalid supply");
+            eosio_assert( maximum_supply.amount > 0, "max-supply must be positive");
+
+            stats statstable( _self, sym.name() );
+            auto existing = statstable.find( sym.name() );
+            eosio_assert( existing != statstable.end(), "token with symbol already exists" );
+
+            statstable.modify(  existing, 0, [&]( auto& s ) {
+                  s.max_supply    = maximum_supply;
+            });
+      }   
+
 
       void token::create( account_name issuer,
                         asset        maximum_supply )

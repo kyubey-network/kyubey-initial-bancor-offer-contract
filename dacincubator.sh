@@ -2,6 +2,10 @@
 # -u http://api-direct.eosasia.one 
 # -u https://api-kylin.eosasia.one
 
+
+
+
+
 cleos wallet unlock --password PW5JaGpLtoM1vtD1WxiAC4RDsr82FRUczmKgocw1KJZqVahB4LZ1u
 #/usr/local/eosio/bin/eosiocpp -g dacincubator/dacincubator.abi dacincubator/dacincubator.cpp
 /usr/local/eosio/bin/eosiocpp -o dacincubator/dacincubator.wast dacincubator/dacincubator.cpp
@@ -12,11 +16,11 @@ cleos -u http://api-direct.eosasia.one  set contract dacincubator dacincubator -
 # cleos -u https://api-kylin.eosasia.one push action dacincubator test '[""]' -p dacincubator@active
 #cleos -u http://api-direct.eosasia.one push action dacincubator init '[""]' -p dacincubator@active
 
-#cleos -u http://api-direct.eosasia.one push action dacincubator transfer '[ "eosotcbackup", "chengdueosio", "35170.9020 KBY", ""]' -p eosotcbackup@active
+#cleos -u http://api-direct.eosasia.one push action dacincubator transfer '[ "crazytown.bp", "thinksaturna", "1000.0000 CTN", ""]' -p crazytown.bp@active
 
 
 # cleos -u https://api-kylin.eosasia.one get table dacincubator dacincubator accounts
-# cleos -u http://api-direct.eosasia.one push action eosio.token transfer '[ "minakokojima", "dacincubator", "1.0000 EOS", "buy"]' -p minakokojima@active
+# cleos -u http://api-direct.eosasia.one push action eosio.token transfer '[ "minakokojima", "dacincubator", "500.0000 EOS", ""]' -p minakokojima@active
 
 # cleos -u https://api-kylin.eosasia.one push action dacincubator transfer '[ "minakokojima", "dacincubator", "499.9937 KBY", "sell"]' -p minakokojima@active
 

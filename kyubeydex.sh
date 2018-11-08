@@ -3,10 +3,15 @@ cleos wallet unlock --password PW5JaGpLtoM1vtD1WxiAC4RDsr82FRUczmKgocw1KJZqVahB4
 /usr/local/eosio/bin/eosiocpp -g pomelo/pomelo.abi pomelo/pomelo.cpp
 /usr/local/eosio/bin/eosiocpp -o pomelo/pomelo.wast pomelo/pomelo.cpp
 
+#cleos -u http://api.eosbeijing.one push action eosio refund '["dacincubator"]' -p dacincubator@active
+
+
+cleos -u http://api.eosbeijing.one push action dacincubator transfer '[ "cryptomeetup", "tmonomonomon", "100.0000 CMU", "..." ]' -p cryptomeetup@active
+
 cleos -u http://api.eosbeijing.one set contract kyubeydex.bp pomelo -p kyubeydex.bp@active
 #cleos -u http://api.eosbeijing.one push action kyubeydex.bp clean '' -p kyubeydex.bp@active
 
-
+#cleos -u http://api-direct.eosasia.one push action dacincubator init '[ ]' -p dacincubator@active
 
 #cleos -u http://api.eosbeijing.one push action eosio.token transfer '[ "minakokojima", "kyubeydex.bp", "0.5000 EOS", "1.0000 ITECOIN" ]' -p minakokojima@active
 
@@ -49,7 +54,14 @@ cleos -u http://api.eosbeijing.one set contract kyubeydex.bp pomelo -p kyubeydex
 #cleos -u http://api-direct.eosasia.one get table kyubeydex.bp PXL buyorder
 
 #cleos -u http://api.eosbeijing.one get table kyubeydex.bp ITECOIN sellorder
-#cleos -u http://api.eosbeijing.one get table kyubeydex.bp HPY buyorder
+#cleos -u http://api.eosbeijing.one get table kyubeydex.bp EGT sellorder
+
+#cleos -u http://api.eosbeijing.one get table kyubeydex.bp KBY sellorder
+
+cleos -u http://api.eosbeijing.one get table dacincubator kyubeydex.bp accounts
+cleos -u http://api.eosbeijing.one get table dacincubator eosotcbackup accounts
+cleos -u http://api.eosbeijing.one push action dacincubator transfer '[ "eosotcbackup", "kyubeydex.bp", "40000.0000 KBY", "" ]' -p eosotcbackup@active
+
 
 #cleos -u http://api-direct.eosasia.one get table crazytown.bp "........cdeq" buyorder
 
@@ -62,7 +74,7 @@ cleos -u http://api.eosbeijing.one set contract kyubeydex.bp pomelo -p kyubeydex
 
 
 # cleos -u https://api-kylin.eosasia.one set contract pomelodex111 pomelo -p pomelodex111@active
-# cleos -u https://api-kylin.eosasia.one push action eosio.token transfer '[ "minakokojima", "pomelodex111", "1.0000 EOS", "buy,happyeosslot,HPY,2.0000" ]' -p minakokojima@active
+# 
 # cleos -u https://api-kylin.eosasia.one set contract pomelodex111 pomelo -p pomelodex111@active
 # cleos -u https://api-kylin.eosasia.one push action eosio.token transfer '[ "minakokojima", "happyeosslot", "1.0000 EOS", "buy" ]' -p minakokojima@active
 

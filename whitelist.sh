@@ -3,11 +3,12 @@ cleos wallet unlock --password PW5JaGpLtoM1vtD1WxiAC4RDsr82FRUczmKgocw1KJZqVahB4
 
 http://api.eosbeijing.one
 
+cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["EGT", "eosiotokener"]' -p kyubeydex.bp@active
+
 cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["PXL", "dacincubator"]' -p kyubeydex.bp@active
 cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["KBY", "dacincubator"]' -p kyubeydex.bp@active
 cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["TPT", "tokendapppub"]' -p kyubeydex.bp@active
 cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["PUB", "tokendapppub"]' -p kyubeydex.bp@active
-
 
 cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["ADD", "eosadddddddd"]' -p kyubeydex.bp@active
 cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["ATD", "eosatidiumio"]' -p kyubeydex.bp@active
@@ -58,6 +59,18 @@ cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["WIZB
 cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["WIZZ", "wizznetwork1"]' -p kyubeydex.bp@active
 cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["YOU", "youbaoyoubao"]' -p kyubeydex.bp@active
 cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["HPY", "happyeosslot"]' -p kyubeydex.bp@active
+
+
+cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["CTN", "dacincubator"]' -p kyubeydex.bp@active
+
+cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["IGC", "eosindiegame"]' -p kyubeydex.bp@active
+cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["FC", "fcfundadmins"]' -p kyubeydex.bp@active
+cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["TGC", "eostgctoken1"]' -p kyubeydex.bp@active
+
+
+
+cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["HPY", "happyeosslot"]' -p kyubeydex.bp@active
+
 
 
 cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["ITECOIN", "itecointoken"]' -p kyubeydex.bp@active
