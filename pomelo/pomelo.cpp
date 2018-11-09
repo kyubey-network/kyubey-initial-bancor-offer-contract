@@ -197,24 +197,7 @@ void pomelo::buy(account_name account, asset bid, asset ask)
     eosio_assert(is_valid_unit_price(bid.amount, ask.amount), "Bid mod ask must be 0!!!"); // Validate unit price is integer
 
     uint64_t order_unit_price = bid.amount * 10000 / ask.amount; // Calculate unit price  
-
-<<<<<<< HEAD
-=======
-    const buyorder receipt{
-        .id = buyorders(_self, ask.symbol.name()).available_primary_key(),
-        .account = account,
-        .bid = bid,
-        .ask = ask,
-        .unit_price = order_unit_price,
-        .timestamp = now(),
-    };
-
-    action(
-        permission_level{ _self, N(active) },
-        _self, N(buyreceipt), receipt
-    ).send();    
             
->>>>>>> 6d5c879e91a41aabd6802e6d349c417fc05681ca
     // Retrive the sell table for current token
     auto sell_table = sellorders(_self, ask.symbol.name());
 

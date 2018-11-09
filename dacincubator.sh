@@ -19,7 +19,7 @@ cleos -u http://api-direct.eosasia.one  set contract dacincubator dacincubator -
 #cleos -u http://api-direct.eosasia.one push action dacincubator transfer '[ "crazytown.bp", "thinksaturna", "1000.0000 CTN", ""]' -p crazytown.bp@active
 
 
-# cleos -u https://api-kylin.eosasia.one get table dacincubator dacincubator accounts
+# cleos -u https://api-kylin.eosasia.one get table dacincubator dacincubator stats
 # cleos -u http://api-direct.eosasia.one push action eosio.token transfer '[ "minakokojima", "dacincubator", "500.0000 EOS", ""]' -p minakokojima@active
 
 # cleos -u https://api-kylin.eosasia.one push action dacincubator transfer '[ "minakokojima", "dacincubator", "499.9937 KBY", "sell"]' -p minakokojima@active

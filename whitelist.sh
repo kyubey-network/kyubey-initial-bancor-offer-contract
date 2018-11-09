@@ -9,10 +9,7 @@ cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["PXL"
 cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["KBY", "dacincubator"]' -p kyubeydex.bp@active
 cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["TPT", "tokendapppub"]' -p kyubeydex.bp@active
 cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["PUB", "tokendapppub"]' -p kyubeydex.bp@active
-<<<<<<< HEAD
-=======
 cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["CMU", "dacincubator"]' -p kyubeydex.bp@active
->>>>>>> 6d5c879e91a41aabd6802e6d349c417fc05681ca
 
 cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["ADD", "eosadddddddd"]' -p kyubeydex.bp@active
 cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["ATD", "eosatidiumio"]' -p kyubeydex.bp@active
@@ -82,3 +79,40 @@ cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["ITEC
 
 
 cleos -u http://api.eosbeijing.one get table kyubeydex.bp KBY whitelist
+
+
+cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["ADE", "buildertoken"]' -p kyubeydex.bp@active
+cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["BG", "bgbgbgbgbgbg"]' -p kyubeydex.bp@active
+cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["BOCAI", "eosbocai1111"]' -p kyubeydex.bp@active
+cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["CHIP", "bet24tokens1"]' -p kyubeydex.bp@active
+cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["CUBE", "eoscubetoken"]' -p kyubeydex.bp@active
+
+bet24tokens1
+
+ADE     buildertoken
+BG	bgbgbgbgbgbg
+BOCAI	eosbocai1111
+CHIP	bet24tokens1
+CUBE	eoscubetoken
+DEOS	thedeosgames
+DET	diceeostoken
+EETH	ethsidechain
+ENB	eosenbpocket
+EOSISH	buildertoken
+ESA	shadowbanker
+ET	endlesstoken
+FOS	farmeosbankx
+HVT	hirevibeshvt
+KEOS	keoskorea111
+LITE	buildertoken
+LKT	chyyshayysha
+LLG	llgonebtotal
+LOVE	lovewintoken
+LZB	gqydooigenes
+MEV	eosvegascoin
+POKER	eospokercoin
+ROLL	luckymetoken
+SEED	parslseed123
+SVN	eoseventoken
+WINS	eoswinonewww
+YUM	yumgamescoin
