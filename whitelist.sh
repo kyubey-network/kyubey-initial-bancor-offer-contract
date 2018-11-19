@@ -87,32 +87,38 @@ cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["BOCA
 cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["CHIP", "bet24tokens1"]' -p kyubeydex.bp@active
 cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["CUBE", "eoscubetoken"]' -p kyubeydex.bp@active
 
-bet24tokens1
 
-ADE     buildertoken
-BG	bgbgbgbgbgbg
-BOCAI	eosbocai1111
-CHIP	bet24tokens1
-CUBE	eoscubetoken
-DEOS	thedeosgames
-DET	diceeostoken
-EETH	ethsidechain
-ENB	eosenbpocket
-EOSISH	buildertoken
-ESA	shadowbanker
-ET	endlesstoken
-FOS	farmeosbankx
-HVT	hirevibeshvt
-KEOS	keoskorea111
-LITE	buildertoken
-LKT	chyyshayysha
-LLG	llgonebtotal
-LOVE	lovewintoken
-LZB	gqydooigenes
-MEV	eosvegascoin
-POKER	eospokercoin
-ROLL	luckymetoken
-SEED	parslseed123
-SVN	eoseventoken
-WINS	eoswinonewww
-YUM	yumgamescoin
+cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["ADE", "buildertoken"]' -p kyubeydex.bp@active
+cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["BG", "bgbgbgbgbgbg"]' -p kyubeydex.bp@active
+cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["BOCAI", "eosbocai1111"]' -p kyubeydex.bp@active
+cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["CHIP", "bet24tokens1"]' -p kyubeydex.bp@active
+cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["CUBE", "eoscubetoken"]' -p kyubeydex.bp@active
+
+cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["DEOS", "thedeosgames"]' -p kyubeydex.bp@active
+cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["DET", "diceeostoken"]' -p kyubeydex.bp@active
+cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["EETH", "ethsidechain"]' -p kyubeydex.bp@active
+cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["ENB", "eosenbpocket"]' -p kyubeydex.bp@active
+cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["EOSISH", "buildertoken"]' -p kyubeydex.bp@active
+cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["ESA", "shadowbanker"]' -p kyubeydex.bp@active
+cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["ET", "endlesstoken"]' -p kyubeydex.bp@active
+cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["FOS", "farmeosbankx"]' -p kyubeydex.bp@active
+cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["HVT", "hirevibeshvt"]' -p kyubeydex.bp@active
+cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["KEOS", "keoskorea111"]' -p kyubeydex.bp@active
+cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["LITE", "buildertoken"]' -p kyubeydex.bp@active
+cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["LKT", "chyyshayysha"]' -p kyubeydex.bp@active
+cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["LLG", "llgonebtotal"]' -p kyubeydex.bp@active
+cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["LOVE", "lovewintoken"]' -p kyubeydex.bp@active
+cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["LZB", "gqydooigenes"]' -p kyubeydex.bp@active
+cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["MEV", "eosvegascoin"]' -p kyubeydex.bp@active
+cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["POKER", "eospokercoin"]' -p kyubeydex.bp@active
+cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["ROLL", "luckymetoken"]' -p kyubeydex.bp@active
+cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["SEED", "parslseed123"]' -p kyubeydex.bp@active
+cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["SVN", "eoseventoken"]' -p kyubeydex.bp@active
+cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["WINS", "eoswinonewww"]' -p kyubeydex.bp@active
+
+
+cleos -u http://api.eosbeijing.one push action kyubeydex.bp setwhitelist '["YDAPP", "dacincubator"]' -p kyubeydex.bp@active
+
+
+
+————————

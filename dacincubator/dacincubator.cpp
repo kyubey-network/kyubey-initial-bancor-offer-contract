@@ -24,20 +24,17 @@ void dacincubator::init() {
         });        
         create(_self, asset(21000000ll * 10000ll, KBY_SYMBOL));
     }*/
-    //create(_self, asset(21000000ll * 10000ll, CTN_SYMBOL));
-    //issue(N(crazytown.bp), asset(21000000ll * 10000ll, CTN_SYMBOL), "");
+    
+    create(_self, asset(100000000ll * 10000ll, YDAPP_SYMBOL));
+    issue(N(ydappiotoken), asset(100000000ll * 10000ll, YDAPP_SYMBOL), "");
 
-    create2(_self, asset(100000000ll * 10000ll, CTN_SYMBOL));
-    issue(N(gu3dgnbsg4ge), asset(15000000ll * 10000ll, CTN_SYMBOL), "");
-    issue(N(aaaqqqsssddd), asset(15000000ll * 10000ll, CTN_SYMBOL), "");
-    issue(N(aaaaaaqqqsss), asset(15000000ll * 10000ll, CTN_SYMBOL), "");        
+    //create2(_self, asset(100000000ll * 10000ll, CTN_SYMBOL));
+    //issue(N(gu3dgnbsg4ge), asset(15000000ll * 10000ll, CTN_SYMBOL), "");
+    //issue(N(aaaqqqsssddd), asset(15000000ll * 10000ll, CTN_SYMBOL), "");
+    //issue(N(aaaaaaqqqsss), asset(15000000ll * 10000ll, CTN_SYMBOL), "");        
 }
 
 void dacincubator::test() {
-    require_auth(_self);
-}
-
-void dacincubator::receipt(const rec& recept) {
     require_auth(_self);
 }
     
@@ -52,13 +49,11 @@ void dacincubator::onTransfer(account_name from, account_name to, asset eos, std
     require_auth(from);
     eosio_assert(eos.is_valid(), "Invalid token transfer");
     eosio_assert(eos.symbol == EOS_SYMBOL, "only system EOS token is allowed");
-    eosio_assert(eos.amount > 0, "must buy a positive amount");
+    eosio_assert(eos.amount > 0, "must buy a positive amount.");
 
     stringSplitter stream(memo);
     string operation;
     stream.get_string(&operation);
-
-
 
     if (operation == "buy") {        
         if (memo.size() > 7) {
@@ -104,13 +99,16 @@ void dacincubator::charge_fee(account_name from, asset& quantity) {
 }
 
 void dacincubator::transfer(account_name from, account_name to, asset quantity, std::string memo) {        
-    if (from != N(myeosgroupon) && from != _self && from != N(eosotcbackup) &&
+    
+    
+    /*if (from != N(myeosgroupon) && from != _self && from != N(eosotcbackup) &&
     from != N(kyubeydex.bp) && to != N(kyubeydex.bp)    
         && quantity.symbol != CTN_SYMBOL
-    ) charge_fee(from, quantity);
+    ) */
 
     if (to == _self) {
-        sell(from, quantity);
+  //      charge_fee(from, quantity);
+//        sell(from, quantity);
     } else {  
         token::transfer(from, to, quantity, memo);
     }

@@ -10,6 +10,8 @@
 #define CTN_SYMBOL S(4, CTN)
 #define CMU_SYMBOL S(4, CMU)
 
+#define YDAPP_SYMBOL S(4, YDAPP)
+
 
 
 using namespace eosio;
@@ -22,8 +24,7 @@ class dacincubator : public kyubey
 public:
     dacincubator(account_name self) : 
         kyubey(self),
-        global(_self, _self), 
-        pendingtx(_self, _self) {
+        global(_self, _self) {
     }
 
     // @abi action
@@ -54,30 +55,6 @@ public:
     };
     typedef eosio::multi_index<N(global), global> global_index;
     global_index global;                 
-
-    // @abi table pendingtx i64    
-    struct pendingtx {
-        uint64_t id = 0;  
-        account_name  from;
-        account_name  to;
-        asset         quantity;
-        string        memo;
-        uint64_t primary_key() const { return id; }
-        void release() {
-        }
-        EOSLIB_SERIALIZE(pendingtx, (id)(from)(to)(quantity)(memo)) 
-    };
-    typedef eosio::multi_index<N(pendingtx), pendingtx> pendingtx_index;
-    pendingtx_index pendingtx;     
-            
-    // @abi table
-    struct rec {
-        account_name account;
-        asset quantity;
-    };
-
-    // @abi action    
-    void receipt(const rec& recepit);  
 
     void charge_fee(account_name from, asset& quantity);    
 
