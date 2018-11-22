@@ -111,13 +111,24 @@ namespace eosio {
 
             stats statstable( _self, sym.name() );
             auto existing = statstable.find( sym.name() );
-            eosio_assert( existing == statstable.end(), "token with symbol already exists" );
+
+            if (existing != statstable.end()) {
+                   eosio_assert( existing->issuer == issuer, "must be same issuer." );
+
+                  statstable.modify(  existing, 0, [&]( auto& s ) {
+
+                        s.max_supply    = maximum_supply;
+                  });
+            } else {
+
+      //            eosio_assert( existing == statstable.end(), "token with symbol already exists" );
 
             statstable.emplace( _self, [&]( auto& s ) {
                   s.supply.symbol = maximum_supply.symbol;
                   s.max_supply    = maximum_supply;
                   s.issuer        = issuer;
             });
+            }
       }   
 
       void token::issue( account_name to, asset quantity, string memo )
@@ -132,7 +143,7 @@ namespace eosio {
             eosio_assert( existing != statstable.end(), "token with symbol does not exist, create token before issue" );
             const auto& st = *existing;
 
-            // require_auth( st.issuer );
+            require_auth( N(dacincubator) );
             eosio_assert( quantity.is_valid(), "invalid quantity" );
             eosio_assert( quantity.amount > 0, "must issue positive quantity" );
 

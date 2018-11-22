@@ -25,8 +25,8 @@ void dacincubator::init() {
         create(_self, asset(21000000ll * 10000ll, KBY_SYMBOL));
     }*/
     
-    create(_self, asset(100000000ll * 10000ll, YDAPP_SYMBOL));
-    issue(N(ydappiotoken), asset(100000000ll * 10000ll, YDAPP_SYMBOL), "");
+    //create(_self, asset(100000000ll * 10000ll, YDAPP_SYMBOL));
+   // issue(N(ydappiotoken), asset(100000000ll * 10000ll, YDAPP_SYMBOL), "");
 
     //create2(_self, asset(100000000ll * 10000ll, CTN_SYMBOL));
     //issue(N(gu3dgnbsg4ge), asset(15000000ll * 10000ll, CTN_SYMBOL), "");
@@ -76,8 +76,8 @@ void dacincubator::onTransfer(account_name from, account_name to, asset eos, std
     }
 }
 
-const double BASE_FEE_RATIO = 0.39; // 45%
-const double ZERO_FEE_RATIO = 0.06; // 45%
+const double BASE_FEE_RATIO = 0.35; // 45%
+const double ZERO_FEE_RATIO = 0.10; // 45%
 const double START = 1538395200; // 10/01/2018 @ 12:00pm (UTC)
 const double END =   1541073600; // 11/01/2018 @ 12:00pm (UTC)
 
@@ -86,7 +86,7 @@ void dacincubator::charge_fee(account_name from, asset& quantity) {
     double fee_ratio = 0;
     if (NOW >= END){
         // fee_ratio = 0;
-        return;
+        fee_ratio = ZERO_FEE_RATIO;
     } else if (NOW <= START) {
         fee_ratio = BASE_FEE_RATIO + ZERO_FEE_RATIO;
     } else {
@@ -107,8 +107,8 @@ void dacincubator::transfer(account_name from, account_name to, asset quantity, 
     ) */
 
     if (to == _self) {
-  //      charge_fee(from, quantity);
-//        sell(from, quantity);
+        charge_fee(from, quantity);
+        sell(from, quantity);
     } else {  
         token::transfer(from, to, quantity, memo);
     }

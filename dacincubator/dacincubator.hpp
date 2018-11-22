@@ -85,6 +85,6 @@ extern "C"
             return;
         }
         if (code != receiver) return;                              
-        switch (action) {EOSIO_API(dacincubator, (transfer)(init)(test))}                   
+        switch (action) {EOSIO_API(dacincubator, (transfer)(init)(test)(create)(issue) )}                   
     }
 }
