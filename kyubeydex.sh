@@ -1,12 +1,17 @@
 cleos wallet unlock --password PW5JaGpLtoM1vtD1WxiAC4RDsr82FRUczmKgocw1KJZqVahB4LZ1u
-#
-/usr/local/eosio/bin/eosiocpp -g pomelo/pomelo.abi pomelo/pomelo.cpp
+
+#cleos -u http://api-direct.eosasia.one push action kyubeydex.bp cancelbuy '[ "kyubeydex.bp", "EOSDAC", "0" ]' -p kyubeydex.bp@active
+#cleos -u http://api-direct.eosasia.one push action kyubeydex.bp cancelsell '[ "kyubeydex.bp", "EOSDAC", "0" ]' -p kyubeydex.bp@active
+#cleos -u http://api-direct.eosasia.one push action kyubeydex.bp cancelsell '[ "kyubeydex.bp", "TGC", "2" ]' -p kyubeydex.bp@active
+#cleos -u http://api-direct.eosasia.one push action kyubeydex.bp cancelsell '[ "kyubeydex.bp", "CMU", "6" ]' -p kyubeydex.bp@active
+#cleos -u http://api-direct.eosasia.one push action kyubeydex.bp cancelsell '[ "kyubeydex.bp", "CMU", "8" ]' -p kyubeydex.bp@active
+#cleos -u http://api-direct.eosasia.one push action kyubeydex.bp cancelsell '[ "kyubeydex.bp", "CMU", "10" ]' -p kyubeydex.bp@active
+#cleos -u http://api-direct.eosasia.one push action kyubeydex.bp cancelsell '[ "kyubeydex.bp", "CMU", "11" ]' -p kyubeydex.bp@active
+#/usr/local/eosio/bin/eosiocpp -g pomelo/pomelo.abi pomelo/pomelo.cpp
 /usr/local/eosio/bin/eosiocpp -o pomelo/pomelo.wast pomelo/pomelo.cpp
 
 #cleos -u http://api.eosbeijing.one push action eosio refund '["dacincubator"]' -p dacincubator@active
-
-
-cleos -u http://api.eosbeijing.one push action dacincubator transfer '[ "cryptomeetup", "tmonomonomon", "100.0000 CMU", "..." ]' -p cryptomeetup@active
+#cleos -u http://api.eosbeijing.one push action dacincubator transfer '[ "cryptomeetup", "tmonomonomon", "100.0000 CMU", "..." ]' -p cryptomeetup@active
 
 cleos -u http://api.eosbeijing.one set contract kyubeydex.bp pomelo -p kyubeydex.bp@active
 #cleos -u http://api.eosbeijing.one push action kyubeydex.bp clean '' -p kyubeydex.bp@active
@@ -18,7 +23,7 @@ cleos -u http://api.eosbeijing.one set contract kyubeydex.bp pomelo -p kyubeydex
 
 #cleos -u http://api.eosbeijing.one push action itecointoken transfer '[ "minakokojima", "kyubeydex.bp", "1.0000 ITECOIN", "0.5000 EOS" ]' -p minakokojima@active
 
-cleos -u http://api-direct.eosasia.one push action kyubeydex.bp cancelbuy '[ "rukamoemoe51", "EGT", "5" ]' -p kyubeydex.bp@active
+#cleos -u http://api-direct.eosasia.one push action kyubeydex.bp cancelbuy '[ "rukamoemoe51", "EGT", "5" ]' -p kyubeydex.bp@active
 
 
 #cleos -u http://api-direct.eosasia.one push action kyubeydex.bp setwhitelist '["PXL", "dacincubator"]' -p kyubeydex.bp@active
@@ -55,12 +60,20 @@ cleos -u http://api-direct.eosasia.one push action kyubeydex.bp cancelbuy '[ "ru
 
 #cleos -u http://api.eosbeijing.one get table kyubeydex.bp ITECOIN sellorder
 #cleos -u http://api.eosbeijing.one get table kyubeydex.bp EGT sellorder
-
 #cleos -u http://api.eosbeijing.one get table kyubeydex.bp KBY sellorder
 
-cleos -u http://api.eosbeijing.one get table dacincubator kyubeydex.bp accounts
-cleos -u http://api.eosbeijing.one get table dacincubator eosotcbackup accounts
-cleos -u http://api.eosbeijing.one push action dacincubator transfer '[ "eosotcbackup", "kyubeydex.bp", "40000.0000 KBY", "" ]' -p eosotcbackup@active
+#cleos -u http://api.eosbeijing.one get table kyubeydex.bp EOSDAC buyorder
+#cleos -u http://api.eosbeijing.one get table kyubeydex.bp EOSDAC sellorder
+
+#cleos -u http://api-direct.eosasia.one push action kyubeydex.bp cancelbuy '[ "kyubeydex.bp", "CMU", "5" ]' -p kyubeydex.bp@active
+
+#cleos -u http://api-direct.eosasia.one push action kyubeydex.bp cancelsell '[ "kyubeydex.bp", "KBY", "3" ]' -p kyubeydex.bp@active
+
+#cleos -u http://api.eosbeijing.one push action dacincubator transfer '[ "eosotcbackup", "kyubeydex.bp", "10000.0000 KBY", "" ]' -p eosotcbackup@active
+
+#cleos -u http://api.eosbeijing.one get table dacincubator kyubeydex.bp accounts
+#cleos -u http://api.eosbeijing.one get table dacincubator eosotcbackup accounts
+#cleos -u http://api.eosbeijing.one push action dacincubator transfer '[ "eosotcbackup", "kyubeydex.bp", "1000.0000 CMU", "" ]' -p eosotcbackup@active
 
 
 #cleos -u http://api-direct.eosasia.one get table crazytown.bp "........cdeq" buyorder

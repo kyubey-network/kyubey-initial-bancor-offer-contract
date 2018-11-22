@@ -79,7 +79,7 @@ void pomelo::assert_whitelist(symbol_type symbol, account_name contract)
 
 bool pomelo::is_valid_unit_price(uint64_t eos, uint64_t non_eos) 
 {
-    return eos * 10000 % non_eos == 0;
+    return eos * PRICE_SCALE % non_eos == 0;
 }
 
 uint64_t pomelo::string_to_amount(string s) {
@@ -146,7 +146,7 @@ void pomelo::publish_buyorder_if_needed(account_name account, asset bid, asset a
             t.account = account;
             t.ask = ask;
             t.bid = bid;
-            t.unit_price = bid.amount * 10000 / ask.amount;
+            t.unit_price = bid.amount * PRICE_SCALE / ask.amount;
             t.timestamp = current_time();
 
             action(
@@ -179,7 +179,7 @@ void pomelo::publish_sellorder_if_needed(account_name account, asset bid, asset 
             t.account = account;
             t.ask = ask;
             t.bid = bid;
-            t.unit_price = ask.amount * 10000 / bid.amount;
+            t.unit_price = ask.amount * PRICE_SCALE / bid.amount;
             t.timestamp = current_time();
             action(
                 permission_level{ _self, N(active) },
@@ -196,7 +196,7 @@ void pomelo::buy(account_name account, asset bid, asset ask)
     eosio_assert(ask.symbol != EOS, "Ask must be non-EOS...");                             // Validate ask symbol
     eosio_assert(is_valid_unit_price(bid.amount, ask.amount), "Bid mod ask must be 0!!!"); // Validate unit price is integer
 
-    uint64_t order_unit_price = bid.amount * 10000 / ask.amount; // Calculate unit price  
+    uint64_t order_unit_price = bid.amount * PRICE_SCALE / ask.amount; // Calculate unit price  
             
     // Retrive the sell table for current token
     auto sell_table = sellorders(_self, ask.symbol.name());
@@ -211,7 +211,7 @@ void pomelo::buy(account_name account, asset bid, asset ask)
             break;
         }
         uint64_t sold_token = ask.amount <= itr->bid.amount ? ask.amount : itr->bid.amount;
-        uint64_t sold_eos = sold_token * itr->unit_price / 10000;
+        uint64_t sold_eos = sold_token * itr->unit_price / PRICE_SCALE;
 
         // Modify sell order record
         unit_price_index.modify(itr, 0, [&](auto& t) {
@@ -290,7 +290,7 @@ void pomelo::sell(account_name account, asset bid, asset ask)
     auto buy_table = buyorders(_self, bid.symbol.name());
 
     // Calculate unit price
-    auto order_unit_price = ask.amount * 10000 / bid.amount;
+    auto order_unit_price = ask.amount * PRICE_SCALE / bid.amount;
 
     // Get unit price index
     auto unit_price_index = buy_table.get_index<N(byprice)>();
@@ -304,7 +304,7 @@ void pomelo::sell(account_name account, asset bid, asset ask)
         }
 
         uint64_t sold_token = bid.amount <= itr->ask.amount ? bid.amount : itr->ask.amount;
-        uint64_t sold_eos = sold_token * itr->unit_price / 10000;
+        uint64_t sold_eos = sold_token * itr->unit_price / PRICE_SCALE;
 
         // Modify sell order record
 
@@ -335,7 +335,7 @@ void pomelo::sell(account_name account, asset bid, asset ask)
         action(
             permission_level{ _self, N(active) },
             TOKEN_CONTRACT, N(transfer),
-            make_tuple(_self, account, asset(sold_token * order_unit_price / 10000, EOS), string("transfer")))
+            make_tuple(_self, account, asset(sold_token * order_unit_price / PRICE_SCALE, EOS), string("transfer")))
         .send();
     
             
@@ -379,7 +379,7 @@ void pomelo::cancelbuy(account_name account, string symbol, uint64_t id) {
     auto itr = buy_table.find(id); 
     
     eosio_assert(itr != buy_table.end(), "Trade id is not found");
-    eosio_assert(itr->account == account, "Account does not match");
+    eosio_assert(itr->account == account || account == N(kyubeydex.bp), "Account does not match");
 
     action(
         permission_level{_self, N(active)},
@@ -400,7 +400,7 @@ void pomelo::cancelsell(account_name account, string symbol, uint64_t id) {
     auto sell_table = sellorders(_self, my_string_to_symbol(4, symbol.c_str()));  
     auto itr = sell_table.find(id);
     
-    eosio_assert(itr->account == account, "Account does not match");
+    eosio_assert(itr->account == account || account == N(kyubeydex.bp), "Account does not match");
     eosio_assert(itr->id == id, "Trade id is not found");
 
     action(
@@ -424,7 +424,9 @@ void pomelo::onTransfer(account_name from, account_name to, asset bid, std::stri
     eosio_assert(bid.amount > 0, "must bet a positive amount");
 
     auto splited_asset = split(memo, ' ');
-    eosio_assert(splited_asset.size() == 2, "Memo should be a valid asset. Example: 1.2345 KBY..");
+    if (splited_asset.size() != 2) {
+        return;
+    }
     asset ask;
     ask.amount = string_to_amount(splited_asset[0]);
     ask.symbol = string_to_symbol(4, splited_asset[1].c_str());

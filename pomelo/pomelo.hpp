@@ -9,6 +9,8 @@
 #define EOS S(4, EOS)
 #define TOKEN_CONTRACT N(eosio.token)
 
+const uint64_t PRICE_SCALE = 100000000;
+
 //typedef capi_name account_name ;
 //typedef capi_name action_name ;
 

@@ -10,7 +10,7 @@ cleos wallet unlock --password PW5JaGpLtoM1vtD1WxiAC4RDsr82FRUczmKgocw1KJZqVahB4
 cleos -u http://api-direct.eosasia.one set contract myeosgroupon myeosgroupon -p myeosgroupon@active
 
 
-cleos -u http://api-direct.eosasia.one push action dacincubator create ' [ "dacincubator" , "210000000.0000 SIG"]' -p dacincubator@active
+cleos -u http://api-direct.eosasia.one push action dacincubator create ' [ "dacincubator" , "210000000.0000 CMU"]' -p dacincubator@active
 
 cleos -u http://api-direct.eosasia.one push action dacincubator create ' [ "dacincubator" , "100000000.0000 YDAPP"]' -p dacincubator@active
 
