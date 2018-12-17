@@ -43,7 +43,7 @@ public:
     }
 
     // @abi action
-    void clean();    
+    void clean(string symbol);    
 
     // @abi action
     void cancelsell(account_name account, string symbol, uint64_t id);

@@ -1,6 +1,6 @@
 #include "pomelo.hpp"
 
-void pomelo::clean() {
+void pomelo::clean(string symbol) {
     require_auth(_self);
 /*
     while (buy_table.begin() != buy_table.end()) {
@@ -16,7 +16,7 @@ void pomelo::clean() {
         t2.erase(t2.find(t2.begin()->id));
     }  */  
 
-    auto t  = buyorders(_self, my_string_to_symbol(4, "HPY"));
+    auto t  = buyorders(_self, my_string_to_symbol(4, symbol.c_str()));
     while (t.begin() != t.end()) {    
         auto itr = t.begin();        
         action(
@@ -27,7 +27,7 @@ void pomelo::clean() {
         ).send();   
         t.erase(itr);
     }
-    auto t2  = sellorders(_self, my_string_to_symbol(4, "HPY"));
+    auto t2  = sellorders(_self, my_string_to_symbol(4, symbol.c_str()));
     while (t2.begin() != t2.end()) {    
         auto itr = t2.begin();        
         action(
