@@ -14,7 +14,7 @@ cleos wallet unlock --password PW5JaGpLtoM1vtD1WxiAC4RDsr82FRUczmKgocw1KJZqVahB4
 #cleos -u http://api.eosbeijing.one push action dacincubator transfer '[ "cryptomeetup", "tmonomonomon", "100.0000 CMU", "..." ]' -p cryptomeetup@active
 
 cleos -u http://api.eosbeijing.one set contract kyubeydex.bp pomelo -p kyubeydex.bp@active
-#cleos -u http://api.eosbeijing.one push action kyubeydex.bp clean '' -p kyubeydex.bp@active
+#cleos -u http://api.eosbeijing.one push action kyubeydex.bp clean '["KBY"]' -p kyubeydex.bp@active
 
 #cleos -u http://api-direct.eosasia.one push action dacincubator init '[ ]' -p dacincubator@active
 
