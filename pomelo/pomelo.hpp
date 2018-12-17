@@ -177,7 +177,7 @@ void pomelo::apply(account_name contract, action_name act)
         auto transfer = unpack_action_data<st_transfer>();
         if (transfer.quantity.symbol == EOS) 
         {
-            eosio_assert(contract == TOKEN_CONTRACT, "Transfer EOS must go through eosio.token");
+            eosio_assert(contract == TOKEN_CONTRACT, "Transfer EOS must go through eosio.token...");
         }
         else
         {

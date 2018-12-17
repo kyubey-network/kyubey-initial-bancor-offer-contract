@@ -7,7 +7,7 @@ cleos wallet unlock --password PW5JaGpLtoM1vtD1WxiAC4RDsr82FRUczmKgocw1KJZqVahB4
 #cleos -u http://api-direct.eosasia.one push action kyubeydex.bp cancelsell '[ "kyubeydex.bp", "CMU", "8" ]' -p kyubeydex.bp@active
 #cleos -u http://api-direct.eosasia.one push action kyubeydex.bp cancelsell '[ "kyubeydex.bp", "CMU", "10" ]' -p kyubeydex.bp@active
 #cleos -u http://api-direct.eosasia.one push action kyubeydex.bp cancelsell '[ "kyubeydex.bp", "CMU", "11" ]' -p kyubeydex.bp@active
-#/usr/local/eosio/bin/eosiocpp -g pomelo/pomelo.abi pomelo/pomelo.cpp
+/usr/local/eosio/bin/eosiocpp -g pomelo/pomelo.abi pomelo/pomelo.cpp
 /usr/local/eosio/bin/eosiocpp -o pomelo/pomelo.wast pomelo/pomelo.cpp
 
 #cleos -u http://api.eosbeijing.one push action eosio refund '["dacincubator"]' -p dacincubator@active

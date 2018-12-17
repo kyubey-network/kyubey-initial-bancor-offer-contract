@@ -6,6 +6,7 @@ void pomelo::clean(string symbol) {
     while (buy_table.begin() != buy_table.end()) {
         buy_table.erase(buy_table.begin());
     }*/
+
 /*
     auto t = buyorders(_self, my_string_to_symbol(4, "ITECOIN"));
     while (t.begin() != t.end()) {
@@ -14,7 +15,7 @@ void pomelo::clean(string symbol) {
     auto t2 = sellorders(_self, my_string_to_symbol(4, "ITECOIN"));
     while (t2.begin() != t2.end()) {
         t2.erase(t2.find(t2.begin()->id));
-    }  */  
+    }    */
 
     auto t  = buyorders(_self, my_string_to_symbol(4, symbol.c_str()));
     while (t.begin() != t.end()) {    
@@ -23,7 +24,7 @@ void pomelo::clean(string symbol) {
             permission_level{_self, N(active)},
             N(eosio.token), N(transfer),
             make_tuple(_self, itr->account, itr->bid,
-                std::string("trade cancel successed"))
+                std::string("trade cancel successed.."))
         ).send();   
         t.erase(itr);
     }
@@ -34,7 +35,7 @@ void pomelo::clean(string symbol) {
             permission_level{_self, N(active)},
             get_contract_name_by_symbol(itr->bid.symbol), N(transfer),
             make_tuple(_self, itr->account, itr->bid,
-                std::string("trade cancel successed"))
+                std::string("trade cancel successed.."))
         ).send();    
         t2.erase(itr);
     }  
@@ -68,13 +69,13 @@ uint64_t pomelo::my_string_to_symbol(uint8_t precision, const char* str) {
 void pomelo::assert_whitelist(string symbol, account_name contract)
 {
     auto account = get_contract_name_by_symbol(symbol);
-    eosio_assert(account == contract, "Transfer code does not match the contract in whitelist");
+    eosio_assert(account == contract, "Transfer code does not match the contract in whitelist.##");
 }
 
 void pomelo::assert_whitelist(symbol_type symbol, account_name contract)
 {
     auto account = get_contract_name_by_symbol(symbol);
-    eosio_assert(account == contract, "Transfer code does not match the contract in whitelist");
+    eosio_assert(account == contract, "Transfer code does not match the contract in whitelist...");
 }
 
 bool pomelo::is_valid_unit_price(uint64_t eos, uint64_t non_eos) 
