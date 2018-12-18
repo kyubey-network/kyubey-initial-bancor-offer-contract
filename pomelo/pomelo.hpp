@@ -43,6 +43,10 @@ public:
     }
 
     // @abi action
+    void addfav(string symbol) {            
+    }    
+
+    // @abi action
     void clean(string symbol);    
 
     // @abi action
@@ -190,7 +194,7 @@ void pomelo::apply(account_name contract, action_name act)
     if (contract != _self) return;
 
     switch (act) {
-        EOSIO_API(pomelo, (clean)(cancelbuy)(cancelsell)(setwhitelist)(rmwhitelist)(login))
+        EOSIO_API(pomelo, (clean)(cancelbuy)(cancelsell)(setwhitelist)(rmwhitelist)(login)(addfav) )
     };
 }
 
