@@ -259,7 +259,7 @@ void pomelo::buy(account_name account, asset bid, asset ask)
         ask.amount -= sold_token;
         
 
-        // Erase the sell order from sell order table if the order finished.
+        // Erase the sell order from sell order table if the order has been took.
         if (itr->ask.amount == 0 || itr->bid.amount == 0)
         {
             itr = unit_price_index.erase(itr);
@@ -351,9 +351,8 @@ void pomelo::sell(account_name account, asset bid, asset ask) {
         bid.amount -= sold_token;
         ask.amount -= sold_eos;
         
-        // Erase the buy order from buy order table if the order finished.
-        if (itr->ask.amount == 0 || itr->bid.amount == 0)
-        {
+        // Erase the buy order from buy order table if the order is finished.
+        if (itr->ask.amount == 0 || itr->bid.amount == 0) {
             itr = unit_price_index.erase(itr);
             if (bid.amount == 0 || ask.amount == 0) {
                 return;
@@ -366,9 +365,6 @@ void pomelo::sell(account_name account, asset bid, asset ask) {
 
     // The current order is not fully matched, publish the order
     publish_sellorder_if_needed(account, bid, ask);
-}
-
-void pomelo::rmbuyorder(uint64_t id) {
 }
 
 void pomelo::cancelbuy(account_name account, string symbol, uint64_t id) {
@@ -388,9 +384,6 @@ void pomelo::cancelbuy(account_name account, string symbol, uint64_t id) {
     ).send();    
 
     buy_table.erase(itr);
-}
-
-void pomelo::rmsellorder(uint64_t id) {
 }
 
 void pomelo::cancelsell(account_name account, string symbol, uint64_t id) {

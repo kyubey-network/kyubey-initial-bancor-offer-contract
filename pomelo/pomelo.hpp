@@ -76,9 +76,6 @@ public:
                   asset        quantity,
                   string       memo);    
 
-    void rmbuyorder(uint64_t id);
-    void rmsellorder(uint64_t id);
-
     // @abi table buyorder i64
     struct buyorder { 
         uint64_t id;
