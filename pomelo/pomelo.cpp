@@ -276,8 +276,7 @@ void pomelo::buy(account_name account, asset bid, asset ask)
     publish_buyorder_if_needed(account, bid, ask);
 }
 
-void pomelo::sell(account_name account, asset bid, asset ask) 
-{
+void pomelo::sell(account_name account, asset bid, asset ask) {
     // Validate bid symbol
     eosio_assert(bid.symbol != EOS, "Bid must be non-EOS");
 
@@ -296,9 +295,8 @@ void pomelo::sell(account_name account, asset bid, asset ask)
     // Get unit price index
     auto unit_price_index = buy_table.get_index<N(byprice)>();
     
-    // Visit sell orders table    
-    for (auto itr = unit_price_index.begin(); itr != unit_price_index.end(); )
-    {    
+    // Visit buy orders table    
+    for (auto itr = unit_price_index.begin(); itr != unit_price_index.end(); ) {    
 
         if (itr->unit_price < order_unit_price) {
             break;
