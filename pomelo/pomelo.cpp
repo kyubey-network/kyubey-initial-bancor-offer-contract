@@ -161,18 +161,16 @@ void pomelo::publish_buyorder_if_needed(account_name account, asset bid, asset a
 }
 
 
-void pomelo::publish_sellorder_if_needed(account_name account, asset bid, asset ask)
-{
+void pomelo::publish_sellorder_if_needed(account_name account, asset bid, asset ask) {
     // Validate bid symbol
     eosio_assert(bid.symbol != EOS, "Bid must be non-EOS");
 
     // Validate ask symbol
     eosio_assert(ask.symbol == EOS, "Ask must be EOS");
 
-    if (ask.amount > 0) 
-    {
-        auto sell_table = sellorders(_self, bid.symbol.name());
+    if (ask.amount > 0) {
 
+        auto sell_table = sellorders(_self, bid.symbol.name());
         auto id = sell_table.available_primary_key();
 
         sell_table.emplace(_self, [&](auto& t) {
@@ -220,6 +218,9 @@ void pomelo::buy(account_name account, asset bid, asset ask)
             t.ask.amount -= sold_eos;
         });
         
+        bid.amount -= sold_eos;
+        ask.amount -= sold_eos * PRICE_SCALE / order_unit_price;        
+        
         // Retrive issue contract of this token
         auto token_contract = get_contract_name_by_symbol(ask.symbol);
 
@@ -253,11 +254,7 @@ void pomelo::buy(account_name account, asset bid, asset ask)
             token_contract, N(transfer),
             make_tuple(_self, account, asset(sold_token, ask.symbol), string("transfer")))
         .send();
-        
-        
-        bid.amount -= sold_eos;
-        ask.amount -= sold_token;
-        
+                
 
         // Erase the sell order from sell order table if the order has been took.
         if (itr->ask.amount == 0 || itr->bid.amount == 0)
@@ -311,6 +308,9 @@ void pomelo::sell(account_name account, asset bid, asset ask) {
             t.bid.amount -= sold_eos;
             t.ask.amount -= sold_token;
         });
+
+        bid.amount -= sold_token;
+        ask.amount -= sold_token * order_unit_price / PRICE_SCALE;
         
         // Retrive issue contract of this token
         auto token_contract = get_contract_name_by_symbol(bid.symbol);
@@ -334,7 +334,7 @@ void pomelo::sell(account_name account, asset bid, asset ask) {
         action(
             permission_level{ _self, N(active) },
             TOKEN_CONTRACT, N(transfer),
-            make_tuple(_self, account, asset(sold_token * order_unit_price / PRICE_SCALE, EOS), string("transfer")))
+            make_tuple(_self, account, asset(sold_eos, EOS), string("transfer")))
         .send();
     
             
@@ -345,18 +345,13 @@ void pomelo::sell(account_name account, asset bid, asset ask) {
             token_contract, N(transfer),
             make_tuple(_self, itr->account, asset(sold_token, bid.symbol), string("transfer")))
         .send();
-        
-            
-
-        bid.amount -= sold_token;
-        ask.amount -= sold_eos;
-        
-        // Erase the buy order from buy order table if the order is finished.
+                
+        // Erase the buy order from buy order table if the order has been took.
         if (itr->ask.amount == 0 || itr->bid.amount == 0) {
             itr = unit_price_index.erase(itr);
             if (bid.amount == 0 || ask.amount == 0) {
                 return;
-            }            
+            }
         }        
         else {
             return;
