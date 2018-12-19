@@ -24,7 +24,7 @@ void pomelo::clean(string symbol) {
             permission_level{_self, N(active)},
             N(eosio.token), N(transfer),
             make_tuple(_self, itr->account, itr->bid,
-                std::string("trade cancel successed.."))
+                std::string("trade cancel successed."))
         ).send();   
         t.erase(itr);
     }
@@ -69,13 +69,13 @@ uint64_t pomelo::my_string_to_symbol(uint8_t precision, const char* str) {
 void pomelo::assert_whitelist(string symbol, account_name contract)
 {
     auto account = get_contract_name_by_symbol(symbol);
-    eosio_assert(account == contract, "Transfer code does not match the contract in whitelist.##");
+    eosio_assert(account == contract, "Transfer code does not match the contract in whitelist.");
 }
 
 void pomelo::assert_whitelist(symbol_type symbol, account_name contract)
 {
     auto account = get_contract_name_by_symbol(symbol);
-    eosio_assert(account == contract, "Transfer code does not match the contract in whitelist...");
+    eosio_assert(account == contract, "Transfer code does not match the contract in whitelist.");
 }
 
 bool pomelo::is_valid_unit_price(uint64_t eos, uint64_t non_eos) 

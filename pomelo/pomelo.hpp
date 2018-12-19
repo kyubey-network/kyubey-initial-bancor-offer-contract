@@ -47,6 +47,10 @@ public:
     }    
 
     // @abi action
+    void removefav(string symbol) {        
+    }        
+
+    // @abi action
     void clean(string symbol);    
 
     // @abi action
