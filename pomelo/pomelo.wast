@@ -15976,6 +15976,30 @@
         )
        )
        (i64.store
+        (get_local $2)
+        (i64.sub
+         (i64.load
+          (get_local $2)
+         )
+         (get_local $17)
+        )
+       )
+       (i64.store
+        (get_local $3)
+        (i64.sub
+         (i64.load
+          (get_local $3)
+         )
+         (i64.div_u
+          (i64.mul
+           (get_local $17)
+           (i64.const 100000000)
+          )
+          (get_local $4)
+         )
+        )
+       )
+       (i64.store
         (get_local $6)
         (i64.shr_u
          (i64.load
@@ -18367,28 +18391,6 @@
          )
         )
        )
-       (i64.store
-        (get_local $2)
-        (tee_local $37
-         (i64.sub
-          (i64.load
-           (get_local $2)
-          )
-          (get_local $17)
-         )
-        )
-       )
-       (i64.store
-        (get_local $3)
-        (tee_local $39
-         (i64.sub
-          (i64.load
-           (get_local $3)
-          )
-          (get_local $16)
-         )
-        )
-       )
        (block $label$94
         (br_if $label$94
          (i64.eqz
@@ -18412,7 +18414,7 @@
        )
        (i64.store offset=88
         (get_local $41)
-        (tee_local $36
+        (tee_local $37
          (i64.load offset=264
           (get_local $41)
          )
@@ -18423,7 +18425,7 @@
          (tee_local $35
           (i32.wrap/i64
            (i64.shr_u
-            (get_local $36)
+            (get_local $37)
             (i64.const 32)
            )
           )
@@ -18448,7 +18450,7 @@
        )
        (i64.store offset=264
         (get_local $41)
-        (tee_local $36
+        (tee_local $37
          (i64.load offset=88
           (get_local $41)
          )
@@ -18456,19 +18458,23 @@
        )
        (br_if $label$2
         (i64.eqz
-         (get_local $37)
+         (i64.load
+          (get_local $2)
+         )
         )
        )
        (br_if $label$2
         (i64.eqz
-         (get_local $39)
+         (i64.load
+          (get_local $3)
+         )
         )
        )
        (br_if $label$4
         (tee_local $35
          (i32.wrap/i64
           (i64.shr_u
-           (get_local $36)
+           (get_local $37)
            (i64.const 32)
           )
          )
@@ -19207,6 +19213,30 @@
          (i32.add
           (get_local $40)
           (i32.const 152)
+         )
+        )
+       )
+       (i64.store
+        (get_local $2)
+        (i64.sub
+         (i64.load
+          (get_local $2)
+         )
+         (get_local $16)
+        )
+       )
+       (i64.store
+        (get_local $3)
+        (i64.sub
+         (i64.load
+          (get_local $3)
+         )
+         (i64.div_u
+          (i64.mul
+           (get_local $16)
+           (get_local $4)
+          )
+          (i64.const 100000000)
          )
         )
        )
@@ -20569,15 +20599,6 @@
         (i32.const 1)
         (i32.const 1008)
        )
-       (set_local $38
-        (i64.div_u
-         (i64.mul
-          (get_local $16)
-          (get_local $4)
-         )
-         (i64.const 100000000)
-        )
-       )
        (set_local $36
         (i64.const 5459781)
        )
@@ -20768,7 +20789,7 @@
        )
        (i64.store
         (get_local $25)
-        (get_local $38)
+        (get_local $17)
        )
        (i64.store
         (get_local $26)
@@ -21612,28 +21633,6 @@
          )
         )
        )
-       (i64.store
-        (get_local $2)
-        (tee_local $36
-         (i64.sub
-          (i64.load
-           (get_local $2)
-          )
-          (get_local $16)
-         )
-        )
-       )
-       (i64.store
-        (get_local $3)
-        (tee_local $38
-         (i64.sub
-          (i64.load
-           (get_local $3)
-          )
-          (get_local $17)
-         )
-        )
-       )
        (block $label$94
         (br_if $label$94
          (i64.eqz
@@ -21657,7 +21656,7 @@
        )
        (i64.store offset=88
         (get_local $40)
-        (tee_local $35
+        (tee_local $36
          (i64.load offset=264
           (get_local $40)
          )
@@ -21668,7 +21667,7 @@
          (tee_local $34
           (i32.wrap/i64
            (i64.shr_u
-            (get_local $35)
+            (get_local $36)
             (i64.const 32)
            )
           )
@@ -21693,7 +21692,7 @@
        )
        (i64.store offset=264
         (get_local $40)
-        (tee_local $35
+        (tee_local $36
          (i64.load offset=88
           (get_local $40)
          )
@@ -21701,19 +21700,23 @@
        )
        (br_if $label$2
         (i64.eqz
-         (get_local $36)
+         (i64.load
+          (get_local $2)
+         )
         )
        )
        (br_if $label$2
         (i64.eqz
-         (get_local $38)
+         (i64.load
+          (get_local $3)
+         )
         )
        )
        (br_if $label$4
         (tee_local $34
          (i32.wrap/i64
           (i64.shr_u
-           (get_local $35)
+           (get_local $36)
            (i64.const 32)
           )
          )
