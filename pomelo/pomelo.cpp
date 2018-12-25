@@ -349,7 +349,7 @@ void pomelo::onTransfer( name from, name to, asset bid, string memo ) {
     eosio_assert(bid.amount > 0, "must bet a positive amount");
 
     auto splited_asset = split(memo, ' ');
-    eosio_assert( splited_asset.size() == 3, "Memo error");
+    eosio_assert( splited_asset.size() == 2, "Memo error");
 
     asset ask( string_to_amount(splited_asset[0]),
                symbol(splited_asset[1], 4)
